@@ -14,19 +14,18 @@
  * limitations under the License.
  */
 
-package com.google.mlkit.md.camera
+package com.example.duoblogistics.ui.camera
 
 import android.os.SystemClock
 import android.util.Log
 import androidx.annotation.GuardedBy
+import com.example.duoblogistics.CameraInputInfo
+import com.example.duoblogistics.InputInfo
+import com.example.duoblogistics.ScopedExecutor
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.TaskExecutors
-import com.google.mlkit.md.addOnFailureListener
-import com.google.mlkit.md.addOnSuccessListener
-import com.google.mlkit.md.CameraInputInfo
-import com.google.mlkit.md.InputInfo
-import com.google.mlkit.md.ScopedExecutor
+import com.google.mlkit.md.camera.FrameProcessor
 import com.google.mlkit.vision.common.InputImage
 import java.nio.ByteBuffer
 

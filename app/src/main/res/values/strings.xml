@@ -2,6 +2,9 @@
 <resources>
   <string name="app_name">MLKit Showcase</string>
 
+  <string name="title_home">Home</string>
+  <string name="title_dashboard">Dashboard</string>
+  <string name="title_notifications">Notifications</string>
   <string name="entry_java_title">Java</string>
   <string name="entry_java_subtitle">Run the MLKit Showcase written in Java.</string>
   <string name="entry_kotlin_title">Kotlin</string>
