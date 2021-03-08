@@ -101,12 +101,12 @@
         app:min="20"
         app:showSeekBarValue="true"/>
 
-    <androidx.preference.SwitchPreferenceCompat
-        android:defaultValue="false"
-        android:key="@string/pref_key_delay_loading_barcode_result"
-        android:persistent="true"
-        android:summary="@string/pref_summary_delay_loading_barcode_result"
-        android:title="@string/pref_title_delay_loading_barcode_result"/>
+<!--    <androidx.preference.SwitchPreferenceCompat-->
+<!--        android:defaultValue="false"-->
+<!--        android:key="@string/pref_key_delay_loading_barcode_result"-->
+<!--        android:persistent="true"-->
+<!--        android:summary="@string/pref_summary_delay_loading_barcode_result"-->
+<!--        android:title="@string/pref_title_delay_loading_barcode_result"/>-->
 
   </androidx.preference.PreferenceCategory>
 

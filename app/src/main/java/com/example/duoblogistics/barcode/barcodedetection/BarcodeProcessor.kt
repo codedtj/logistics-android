@@ -74,15 +74,15 @@ class BarcodeProcessor(graphicOverlay: GraphicOverlay, private val workflowModel
                 workflowModel.setWorkflowState(WorkflowModel.WorkflowState.CONFIRMING)
             } else {
                 // Barcode size in the camera view is sufficient.
-                if (PreferenceUtils.shouldDelayLoadingBarcodeResult(graphicOverlay.context)) {
-                    val loadingAnimator = createLoadingAnimator(graphicOverlay, barcodeInCenter)
-                    loadingAnimator.start()
-                    graphicOverlay.add(BarcodeLoadingGraphic(graphicOverlay, loadingAnimator))
-                    workflowModel.setWorkflowState(WorkflowModel.WorkflowState.SEARCHING)
-                } else {
+//                if (PreferenceUtils.shouldDelayLoadingBarcodeResult(graphicOverlay.context)) {
+//                    val loadingAnimator = createLoadingAnimator(graphicOverlay, barcodeInCenter)
+//                    loadingAnimator.start()
+//                    graphicOverlay.add(BarcodeLoadingGraphic(graphicOverlay, loadingAnimator))
+//                    workflowModel.setWorkflowState(WorkflowModel.WorkflowState.SEARCHING)
+//                } else {
                     workflowModel.setWorkflowState(WorkflowModel.WorkflowState.DETECTED)
                     workflowModel.detectedBarcode.setValue(barcodeInCenter)
-                }
+//                }
             }
         }
         graphicOverlay.invalidate()
