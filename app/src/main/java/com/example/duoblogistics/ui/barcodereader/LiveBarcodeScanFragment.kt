@@ -57,7 +57,7 @@ class LiveBarcodeScanFragment : Fragment(), View.OnClickListener {
                 setTarget(promptChip)
             }
 
-        getView()?.findViewById<View>(R.id.close_button)?.setOnClickListener(this)
+//        getView()?.findViewById<View>(R.id.close_button)?.setOnClickListener(this)
         flashButton = getView()?.findViewById<View>(R.id.flash_button)?.apply {
             setOnClickListener(this@LiveBarcodeScanFragment)
         }
