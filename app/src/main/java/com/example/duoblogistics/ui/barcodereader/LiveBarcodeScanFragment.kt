@@ -18,6 +18,7 @@ import com.example.duoblogistics.ui.camera.CameraSource
 import com.example.duoblogistics.ui.camera.CameraSourcePreview
 import com.example.duoblogistics.ui.camera.GraphicOverlay
 import com.example.duoblogistics.ui.camera.WorkflowModel
+import com.example.duoblogistics.ui.settings.SettingsActivity
 import com.google.android.gms.common.internal.Objects
 import com.google.android.material.chip.Chip
 import java.io.IOException
@@ -110,7 +111,10 @@ class LiveBarcodeScanFragment : Fragment(), View.OnClickListener {
             }
             R.id.settings_button -> {
                 settingsButton?.isEnabled = false
-//                startActivity(Intent(this, SettingsActivity::class.java))
+                activity?.let{
+                    val intent = Intent (it, SettingsActivity::class.java)
+                    it.startActivity(intent)
+                }
             }
         }
     }
