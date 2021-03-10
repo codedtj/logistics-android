@@ -192,7 +192,9 @@ class LiveBarcodeScanFragment : Fragment(), View.OnClickListener {
 
         workflowModel?.detectedBarcode?.observe(viewLifecycleOwner, Observer { barcode ->
             if (barcode != null) {
-                Log.d("RESULT", barcode.rawValue.toString())
+                Log.d("RESULTING_CODE", barcode.rawValue.toString())
+                workflowModel?.setWorkflowState(WorkflowModel.WorkflowState.DETECTING)
+//                startCameraPreview()
 //                val barcodeFieldList = ArrayList<BarcodeField>()
 //                barcodeFieldList.add(BarcodeField("Raw Value", barcode.rawValue ?: ""))
 //                BarcodeResultFragment.show(supportFragmentManager, barcodeFieldList)
