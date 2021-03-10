@@ -5,6 +5,7 @@ import android.media.MediaPlayer
 import android.media.RingtoneManager
 import com.example.duoblogistics.R
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 
 
 fun Context.notificationSignal() {
@@ -38,4 +39,8 @@ fun MediaPlayer.stopPlay() {
     } catch (t: Throwable) {
         Log.e("media-player", "Failed to stop player " + t.message)
     }
+}
+
+fun <T> MutableLiveData<T>.notifyObserver() {
+    this.value = this.value
 }

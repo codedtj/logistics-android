@@ -11,7 +11,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.example.duoblogistics.MainActivity
+import com.example.duoblogistics.MainViewModel
+import com.example.duoblogistics.MainViewModelFactory
 import com.example.duoblogistics.R
 import com.example.duoblogistics.barcode.barcodedetection.BarcodeProcessor
 import com.example.duoblogistics.ui.camera.CameraSource
@@ -21,18 +25,13 @@ import com.example.duoblogistics.ui.camera.WorkflowModel
 import com.example.duoblogistics.ui.settings.SettingsActivity
 import com.google.android.gms.common.internal.Objects
 import com.google.android.material.chip.Chip
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.x.closestKodein
+import org.kodein.di.generic.instance
 import java.io.IOException
 import java.util.ArrayList
 
 class LiveBarcodeScanFragment : Fragment(), View.OnClickListener {
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_live_barcode_scan, container, false)
-    }
-
     private var cameraSource: CameraSource? = null
     private var preview: CameraSourcePreview? = null
     private var graphicOverlay: GraphicOverlay? = null
@@ -42,6 +41,16 @@ class LiveBarcodeScanFragment : Fragment(), View.OnClickListener {
     private var promptChipAnimator: AnimatorSet? = null
     private var workflowModel: WorkflowModel? = null
     private var currentWorkflowState: WorkflowModel.WorkflowState? = null
+
+    private lateinit var mainViewModel: MainViewModel
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_live_barcode_scan, container, false)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         preview = getView()?.findViewById(R.id.camera_preview)
@@ -53,7 +62,10 @@ class LiveBarcodeScanFragment : Fragment(), View.OnClickListener {
 
         promptChip = getView()?.findViewById(R.id.bottom_prompt_chip)
         promptChipAnimator =
-            (AnimatorInflater.loadAnimator(activity, R.animator.bottom_prompt_chip_enter) as AnimatorSet).apply {
+            (AnimatorInflater.loadAnimator(
+                activity,
+                R.animator.bottom_prompt_chip_enter
+            ) as AnimatorSet).apply {
                 setTarget(promptChip)
             }
 
@@ -64,6 +76,8 @@ class LiveBarcodeScanFragment : Fragment(), View.OnClickListener {
         settingsButton = getView()?.findViewById<View>(R.id.settings_button)?.apply {
             setOnClickListener(this@LiveBarcodeScanFragment)
         }
+
+        mainViewModel = (this.activity as MainActivity).mainViewModel
 
         setUpWorkflowModel()
     }
@@ -111,8 +125,8 @@ class LiveBarcodeScanFragment : Fragment(), View.OnClickListener {
             }
             R.id.settings_button -> {
                 settingsButton?.isEnabled = false
-                activity?.let{
-                    val intent = Intent (it, SettingsActivity::class.java)
+                activity?.let {
+                    val intent = Intent(it, SettingsActivity::class.java)
                     it.startActivity(intent)
                 }
             }
@@ -193,7 +207,11 @@ class LiveBarcodeScanFragment : Fragment(), View.OnClickListener {
         workflowModel?.detectedBarcode?.observe(viewLifecycleOwner, Observer { barcode ->
             if (barcode != null) {
                 Log.d("RESULTING_CODE", barcode.rawValue.toString())
+
+                mainViewModel.pushCode(barcode.rawValue.toString())
+
                 workflowModel?.setWorkflowState(WorkflowModel.WorkflowState.DETECTING)
+
 //                startCameraPreview()
 //                val barcodeFieldList = ArrayList<BarcodeField>()
 //                barcodeFieldList.add(BarcodeField("Raw Value", barcode.rawValue ?: ""))

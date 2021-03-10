@@ -7,14 +7,27 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.duoblogistics.extensions.playSuccessSound
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.closestKodein
+import org.kodein.di.generic.instance
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), KodeinAware {
+
+    override val kodein by closestKodein()
+
+    private val mainViewModelFactory: MainViewModelFactory by instance()
+
+    lateinit var mainViewModel: MainViewModel
+
     private val CAMERA_PERMISSION_CODE = 100
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,31 +49,34 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        checkPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE)
+        checkPermission()
+
+        mainViewModel = ViewModelProvider(this, mainViewModelFactory)
+            .get(MainViewModel::class.java)
+
+        startUp()
     }
 
 
-    private fun checkPermission(permission: String, requestCode: Int) {
+    private fun startUp() {
+        mainViewModel.codes.observe(this, Observer {
+            this.playSuccessSound()
+        })
+    }
+
+    private fun checkPermission() {
         // Checking if permission is not granted
         if (ContextCompat.checkSelfPermission(
                 this@MainActivity,
-                permission
+                Manifest.permission.CAMERA
             )
             == PackageManager.PERMISSION_DENIED
         ) {
             ActivityCompat
                 .requestPermissions(
-                    this@MainActivity, arrayOf(permission),
-                    requestCode
+                    this@MainActivity, arrayOf(Manifest.permission.CAMERA),
+                    CAMERA_PERMISSION_CODE
                 )
-        } else {
-            Toast
-                .makeText(
-                    this@MainActivity,
-                    "Permission already granted",
-                    Toast.LENGTH_SHORT
-                )
-                .show()
         }
     }
 }
