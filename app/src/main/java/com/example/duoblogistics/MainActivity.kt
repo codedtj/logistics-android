@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity(), KodeinAware {
 
     private fun startUp() {
         mainViewModel.codes.observe(this, Observer {
-            this.playSuccessSound()
+//            this.playSuccessSound()
         })
     }
 

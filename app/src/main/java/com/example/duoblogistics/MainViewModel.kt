@@ -1,20 +1,30 @@
 package com.example.duoblogistics
 
+import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.duoblogistics.data.entities.Code
 import com.example.duoblogistics.extensions.notifyObserver
 
 class MainViewModel() : ViewModel() {
-    val codes = MutableLiveData<MutableList<String>>()
+    val mCodes = MutableLiveData<ArrayList<Code>>()
+    val codes: LiveData<ArrayList<Code>>
+        get() = mCodes
 
     init {
-        codes.postValue(mutableListOf())
+        mCodes.postValue(arrayListOf())
     }
 
     fun pushCode(code: String) {
-        if (codes.value?.find { c -> c == code } === null) {
-            codes.value?.add(code)
-            codes.notifyObserver()
+        if (mCodes.value?.find { c -> c.code == code } === null) {
+            mCodes.value?.add(Code(null, code))
+            mCodes.notifyObserver()
         }
+    }
+
+    fun removeCode(code: Code) {
+        mCodes.value?.remove(code)
+        mCodes.notifyObserver()
     }
 }
