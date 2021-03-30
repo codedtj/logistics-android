@@ -1,4 +1,4 @@
-package com.example.duoblogistics
+package com.example.duoblogistics.ui.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

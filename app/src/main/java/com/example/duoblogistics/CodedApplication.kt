@@ -1,6 +1,7 @@
 package com.example.duoblogistics
 
 import android.app.Application
+import com.example.duoblogistics.ui.main.MainViewModelFactory
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.generic.bind

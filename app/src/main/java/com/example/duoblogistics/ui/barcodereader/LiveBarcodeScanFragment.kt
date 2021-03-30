@@ -11,11 +11,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import com.example.duoblogistics.MainActivity
-import com.example.duoblogistics.MainViewModel
-import com.example.duoblogistics.MainViewModelFactory
+import com.example.duoblogistics.ui.main.MainActivity
+import com.example.duoblogistics.ui.main.MainViewModel
 import com.example.duoblogistics.R
 import com.example.duoblogistics.barcode.barcodedetection.BarcodeProcessor
 import com.example.duoblogistics.ui.camera.CameraSource
@@ -25,11 +23,7 @@ import com.example.duoblogistics.ui.camera.WorkflowModel
 import com.example.duoblogistics.ui.settings.SettingsActivity
 import com.google.android.gms.common.internal.Objects
 import com.google.android.material.chip.Chip
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.x.closestKodein
-import org.kodein.di.generic.instance
 import java.io.IOException
-import java.util.ArrayList
 
 class LiveBarcodeScanFragment : Fragment(), View.OnClickListener {
     private var cameraSource: CameraSource? = null

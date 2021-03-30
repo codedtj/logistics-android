@@ -2,16 +2,14 @@ package com.example.duoblogistics.ui.storedItems
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.DefaultItemAnimator
-import com.example.duoblogistics.MainActivity
-import com.example.duoblogistics.MainViewModel
+import com.example.duoblogistics.ui.main.MainActivity
+import com.example.duoblogistics.ui.main.MainViewModel
 import com.example.duoblogistics.R
 
 /**

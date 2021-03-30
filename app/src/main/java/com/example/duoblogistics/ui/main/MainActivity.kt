@@ -1,9 +1,8 @@
-package com.example.duoblogistics
+package com.example.duoblogistics.ui.main
 
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -13,7 +12,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.duoblogistics.extensions.playSuccessSound
+import com.example.duoblogistics.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.closestKodein
