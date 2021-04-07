@@ -35,10 +35,10 @@ class SplashScreenActivity : AppCompatActivity(), KodeinAware {
 
         toLoginActivity();
 
-//        if (settings.getToken().isNullOrBlank())
-//            toLoginActivity()
-//        else
-//            vm.getAuthorizedUser()
+        if (settings.getToken().isNullOrBlank())
+            toLoginActivity()
+        else
+            toMainActivity()
 
 //        setObservers()
     }
