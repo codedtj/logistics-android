@@ -2,12 +2,15 @@ package com.example.duoblogistics.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.duoblogistics.data.network.models.Credentials
 import com.example.duoblogistics.databinding.ActivityLoginBinding
+import com.example.duoblogistics.internal.data.STATUS_BUSY
+import com.example.duoblogistics.internal.data.STATUS_NEEDLE
 import com.example.duoblogistics.internal.utils.SharedSettings
 import com.example.duoblogistics.ui.main.MainActivity
 import org.kodein.di.Kodein
@@ -36,19 +39,28 @@ class LoginActivity : AppCompatActivity(), KodeinAware {
             .get(LoginViewModel::class.java)
 
         setListeners()
+
+        activeState()
     }
 
     private fun setListeners() {
         binding.loginBtn.setOnClickListener { authorize() }
 
-        viewModel.authorizeResponse.observe(this, Observer { response ->
+        viewModel.authorizeResponse.observe(this, { response ->
+                settings.saveToken(response.token)
+                launchMainActivity()
+                finish()
+        })
 
-//            if (response.status === Status.SUCCESS) {
-//                settings.saveToken(response.data!!.token)
-//                launchMainActivity()
-//                finish()
-//            } else
-//                activeState()
+        viewModel.state.observe(this, {
+            when(it){
+                 STATUS_NEEDLE-> {
+                    this.activeState()
+                }
+                STATUS_BUSY -> {
+                    this.busyState()
+                }
+            }
         })
     }
 
@@ -61,7 +73,6 @@ class LoginActivity : AppCompatActivity(), KodeinAware {
 //        val credentials = Credentials(binding.emailEt.text.toString(), binding.passwordEt.text.toString())
         val credentials = Credentials("1010011", "Dhtvtyysq92");
         if (credentials.validate()) {
-            busyState()
             viewModel.authorize(credentials)
         }
     }
