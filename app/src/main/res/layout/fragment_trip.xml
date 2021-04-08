@@ -6,20 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".ui.trips.details.TripFragment">
 
-    <TextView
-        android:id="@+id/trip_code"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/trip_items_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="@id/trip_code"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

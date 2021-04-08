@@ -40,7 +40,5 @@ class TripFragment : Fragment(), KodeinAware {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.tripCode.text = tripsViewModel.selectedTrip?.code
     }
 }

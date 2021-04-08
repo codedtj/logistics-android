@@ -12,13 +12,17 @@
         tools:layout="@layout/fragment_trips">
         <action
             android:id="@+id/show_trip_details"
-            app:destination="@id/navigate_to_trip" />
+            app:destination="@id/navigate_to_trip">
+            <argument
+                android:name="code"
+                app:argType="string"/>
+        </action>
     </fragment>
 
     <fragment
         android:id="@+id/navigate_to_trip"
         android:name="com.example.duoblogistics.ui.trips.details.TripFragment"
-        android:label="@string/title_trip"
+        android:label="Рейс: {code}"
         tools:layout="@layout/fragment_trip"/>
 
 <!--    <fragment-->
