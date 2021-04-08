@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.duoblogistics.ui.storedItems.CodesFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_codes_list" />
+        android:name="com.example.duoblogistics.ui.trips.TripsFragment"
+        android:label="Рейсы"
+        tools:layout="@layout/fragment_trips" />
 
 <!--    <fragment-->
 <!--        android:id="@+id/navigation_dashboard"-->

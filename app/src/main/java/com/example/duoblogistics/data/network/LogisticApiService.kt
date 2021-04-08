@@ -1,27 +1,32 @@
 package com.example.duoblogistics.data.network
 
+import com.example.duoblogistics.data.entities.Trip
 import com.example.duoblogistics.data.network.interceptors.RequestTokenInterceptor
 import com.example.duoblogistics.data.network.interceptors.ResponseCodeInterceptor
 import com.example.duoblogistics.data.network.models.AuthenticationResponse
 import com.example.duoblogistics.data.network.models.Credentials
 import com.example.duoblogistics.internal.utils.SharedSettings
+import io.reactivex.Flowable
 import io.reactivex.Single
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface LogisticApiService {
     @POST("authorize")
     fun authorize(@Body data: Credentials): Single<AuthenticationResponse>
 
+    @GET("trips")
+    fun getActiveTrips(): Flowable<List<Trip>>
+
 /*    @GET("user")
     suspend fun getAuthorizedUser(): Response<AuthorizedUserResponse>
 
-    @GET("trips")
-    suspend fun getActiveTrips(): Response<List<ActiveTrip>>
+
 
     @POST("trip/{id}/load")
     suspend fun loadItem(
@@ -58,7 +63,7 @@ interface LogisticApiService {
             val client = httpClient.build()
             val retrofit = Retrofit.Builder()
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(MoshiConverterFactory.create())
                 .baseUrl("https://duob.ajoibot.tj/api/")
                 .client(client)
                 .build()

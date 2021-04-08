@@ -3,15 +3,17 @@ package com.example.duoblogistics
 import android.app.Application
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
-import com.example.duoblogistics.data.network.IRemoteDataSource
-import com.example.duoblogistics.data.network.LogisticApiService
 import com.example.duoblogistics.data.network.RemoteDataSource
-import com.example.duoblogistics.data.network.interceptors.RequestTokenInterceptor
+import com.example.duoblogistics.data.network.LogisticApiService
+import com.example.duoblogistics.data.network.RemoteDataSourceImpl
 import com.example.duoblogistics.data.repositories.AuthRepository
 import com.example.duoblogistics.data.repositories.AuthRepositoryImpl
+import com.example.duoblogistics.data.repositories.TripsRepository
+import com.example.duoblogistics.data.repositories.TripsRepositoryImpl
 import com.example.duoblogistics.internal.utils.SharedSettings
 import com.example.duoblogistics.ui.auth.LoginViewModelFactory
 import com.example.duoblogistics.ui.main.MainViewModelFactory
+import com.example.duoblogistics.ui.trips.TripsViewModelFactory
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
@@ -35,15 +37,16 @@ class CodedApplication : Application(), KodeinAware, ViewModelStoreOwner {
 
         bind() from singleton { SharedSettings(instance()) }
 
-        bind() from provider { MainViewModelFactory() }
-
         bind() from provider { LoginViewModelFactory(instance()) }
+        bind() from provider { MainViewModelFactory() }
+        bind() from provider { TripsViewModelFactory(instance()) }
 
         bind() from singleton { LogisticApiService(instance()) }
 
-        bind<IRemoteDataSource>() with singleton { RemoteDataSource(instance()) }
+        bind<RemoteDataSource>() with singleton { RemoteDataSourceImpl(instance()) }
 
         bind<AuthRepository>() with singleton { AuthRepositoryImpl(instance()) }
+        bind<TripsRepository>() with singleton { TripsRepositoryImpl(instance()) }
 
     }
 }
