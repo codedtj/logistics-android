@@ -4,7 +4,7 @@ import com.example.duoblogistics.data.entities.Trip
 import io.reactivex.Flowable
 
 interface TripsRepository {
-    fun getActiveTrips(): Flowable<List<Trip>>
+    fun getTrips(): Flowable<List<Trip>>
 
 //    suspend fun loadItem(tripId: String, itemCode: String)
 //

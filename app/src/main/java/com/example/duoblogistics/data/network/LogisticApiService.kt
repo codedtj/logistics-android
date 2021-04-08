@@ -21,7 +21,7 @@ interface LogisticApiService {
     fun authorize(@Body data: Credentials): Single<AuthenticationResponse>
 
     @GET("trips")
-    fun getActiveTrips(): Flowable<List<Trip>>
+    fun getTrips(): Flowable<List<Trip>>
 
 /*    @GET("user")
     suspend fun getAuthorizedUser(): Response<AuthorizedUserResponse>

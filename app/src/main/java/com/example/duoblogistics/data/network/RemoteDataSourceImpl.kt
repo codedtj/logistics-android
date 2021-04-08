@@ -12,5 +12,5 @@ class RemoteDataSourceImpl(
     override fun authorize(credentials: Credentials): Single<AuthenticationResponse> =
         apiService.authorize(credentials)
 
-    override fun getActiveTrips(): Flowable<List<Trip>>  = apiService.getActiveTrips()
+    override fun getTrips(): Flowable<List<Trip>>  = apiService.getTrips()
 }

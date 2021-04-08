@@ -5,8 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.duoblogistics.BR
 import com.example.duoblogistics.R
-import com.example.duoblogistics.data.entities.Trip
-import com.example.duoblogistics.data.network.models.AuthenticationResponse
 import com.example.duoblogistics.data.repositories.TripsRepository
 import com.example.duoblogistics.internal.base.BaseViewModel
 import com.example.duoblogistics.internal.data.RecyclerItem
@@ -26,7 +24,7 @@ class TripsViewModel(private val tripsRepository: TripsRepository) : BaseViewMod
 
     fun fetchTrips() {
         compositeDisposable += tripsRepository
-            .getActiveTrips()
+            .getTrips()
             .subscribeOn(Schedulers.computation())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(

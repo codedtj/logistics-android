@@ -11,7 +11,7 @@ interface RemoteDataSource {
 
 //    suspend fun getAuthorizedUser(): Result<AuthorizedUserResponse>
 //
-    fun getActiveTrips(): Flowable<List<Trip>>
+    fun getTrips(): Flowable<List<Trip>>
 //
 //    suspend fun loadItem(tripId: String, itemCode: String)
 //
