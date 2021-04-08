@@ -11,6 +11,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 class TripsViewModel(private val tripsRepository: TripsRepository) : BaseViewModel() {
+    var selectedTrip: Trip? = null
+
     private val mTrips = MutableLiveData<List<Trip>>()
     val trips: LiveData<List<Trip>>
         get() = mTrips

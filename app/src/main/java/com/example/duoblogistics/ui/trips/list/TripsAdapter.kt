@@ -1,4 +1,4 @@
-package com.example.duoblogistics.ui.trips
+package com.example.duoblogistics.ui.trips.list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

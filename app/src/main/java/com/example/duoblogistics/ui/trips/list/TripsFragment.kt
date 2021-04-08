@@ -1,4 +1,4 @@
-package com.example.duoblogistics.ui.trips
+package com.example.duoblogistics.ui.trips.list
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.duoblogistics.databinding.FragmentTripsBinding
+import com.example.duoblogistics.ui.trips.TripsViewModel
+import com.example.duoblogistics.ui.trips.TripsViewModelFactory
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
 import org.kodein.di.generic.instance

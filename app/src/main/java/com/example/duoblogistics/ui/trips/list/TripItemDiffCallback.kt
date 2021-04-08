@@ -1,4 +1,4 @@
-package com.example.duoblogistics.ui.trips
+package com.example.duoblogistics.ui.trips.list
 
 import androidx.recyclerview.widget.DiffUtil
 import com.example.duoblogistics.data.entities.Trip

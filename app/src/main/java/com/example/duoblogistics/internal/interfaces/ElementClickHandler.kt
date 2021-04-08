@@ -1,4 +1,4 @@
-package com.example.duoblogistics.contracts
+package com.example.duoblogistics.internal.interfaces
 
 interface ElementClickHandler {
     fun onElementClick()
