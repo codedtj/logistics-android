@@ -1,6 +1,7 @@
 package com.example.duoblogistics.ui.trips.list
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,16 +24,22 @@ class TripsFragment : Fragment(), KodeinAware {
 
     private lateinit var binding: FragmentTripsBinding
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        tripsViewModel = activity?.run {
+            ViewModelProvider(this, tripsViewModelFactory)
+                .get(TripsViewModel::class.java)
+        } ?: throw Exception("Invalid Activity")
+
+        tripsViewModel.fetchTrips()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        tripsViewModel = activity?.run {
-            ViewModelProvider(this, tripsViewModelFactory)
-                .get(TripsViewModel::class.java)
-        } ?: throw Exception("Invalid Activity")
-//        return inflater.inflate(R.layout.fragment_trips, container, false)
         binding = FragmentTripsBinding.inflate(inflater)
 
         return binding.root;
@@ -47,8 +54,6 @@ class TripsFragment : Fragment(), KodeinAware {
         tripsViewModel.trips.observe(viewLifecycleOwner, {
             adapter.submitList(it)
         })
-
-        tripsViewModel.fetchTrips()
     }
 }
 
