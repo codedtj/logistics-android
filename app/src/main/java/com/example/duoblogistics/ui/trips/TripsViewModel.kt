@@ -26,8 +26,6 @@ class TripsViewModel(private val tripsRepository: TripsRepository) : BaseViewMod
                 {
                     Log.d("trips-view-model", "Loaded trips $it")
 
-                    Log.d("trips-view-model", "Loaded trips $it")
-
                     mTrips.value = it;
                 },
                 {

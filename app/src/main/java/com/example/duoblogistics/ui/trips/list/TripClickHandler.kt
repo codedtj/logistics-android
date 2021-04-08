@@ -14,6 +14,8 @@ class TripClickHandler  (
 
     override fun onElementClick() {
         vm.selectedTrip = trip
-        
+        val action = TripsFragmentDirections.showTripDetails()
+        fragment.findNavController().navigate(action)
+
     }
 }

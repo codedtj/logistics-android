@@ -3,19 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_trips">
 
     <fragment
-        android:id="@+id/navigation_home"
+        android:id="@+id/navigation_trips"
         android:name="com.example.duoblogistics.ui.trips.list.TripsFragment"
-        android:label="Рейсы"
-        tools:layout="@layout/fragment_trips" />
+        android:label="@string/title_trips"
+        tools:layout="@layout/fragment_trips">
+        <action
+            android:id="@+id/show_trip_details"
+            app:destination="@id/navigate_to_trip" />
+    </fragment>
 
-<!--    <fragment-->
-<!--        android:id="@+id/navigation_dashboard"-->
-<!--        android:name="com.example.duoblogistics.ui.dashboard.DashboardFragment"-->
-<!--        android:label="@string/title_dashboard"-->
-<!--        tools:layout="@layout/fragment_dashboard" />-->
+    <fragment
+        android:id="@+id/navigate_to_trip"
+        android:name="com.example.duoblogistics.ui.trips.details.TripFragment"
+        android:label="@string/title_trip"
+        tools:layout="@layout/fragment_trip"/>
 
 <!--    <fragment-->
 <!--        android:id="@+id/navigation_notifications"-->
