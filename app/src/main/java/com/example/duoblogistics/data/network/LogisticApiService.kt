@@ -20,7 +20,7 @@ interface LogisticApiService {
     @POST("authorize")
     fun authorize(@Body data: Credentials): Single<AuthenticationResponse>
 
-    @GET("trips")
+    @GET("available-trips")
     fun getTrips(): Flowable<List<Trip>>
 
 /*    @GET("user")
