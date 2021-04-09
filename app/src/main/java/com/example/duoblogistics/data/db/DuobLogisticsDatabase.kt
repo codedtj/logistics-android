@@ -4,12 +4,15 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.duoblogistics.data.db.daos.StoredItemDao
 import com.example.duoblogistics.data.db.daos.TripDao
+import com.example.duoblogistics.data.db.entities.StoredItem
 import com.example.duoblogistics.data.db.entities.Trip
 
-@Database(entities = [Trip::class], version = 1)
+@Database(entities = [Trip::class, StoredItem::class], version = 1)
 abstract class DuobLogisticsDatabase : RoomDatabase() {
     abstract fun tripDao(): TripDao
+    abstract fun storedItemDao(): StoredItemDao
 
     companion object {
         @Volatile

@@ -2,6 +2,7 @@ package com.example.duoblogistics.data.repositories
 
 import android.util.Log
 import com.example.duoblogistics.data.db.LocalDataSource
+import com.example.duoblogistics.data.db.entities.StoredItem
 import com.example.duoblogistics.data.db.entities.Trip
 import com.example.duoblogistics.data.network.RemoteDataSource
 import io.reactivex.Flowable
@@ -12,7 +13,7 @@ class TripsRepositoryImpl(
     private val local: LocalDataSource
 ) : TripsRepository {
     override fun getTrips(): Flowable<List<Trip>> {
-        val disposable = remote.getTrips()
+        val disposable = remote.fetchTrips()
             .subscribeOn(Schedulers.computation())
             .subscribe(
                 { trips ->
@@ -34,5 +35,9 @@ class TripsRepositoryImpl(
             )
 
         return local.getTrips()
+    }
+
+    override fun getTripStoredItems(id:String): Flowable<List<StoredItem>> {
+        return local.getTripStoredItems(id)
     }
 }

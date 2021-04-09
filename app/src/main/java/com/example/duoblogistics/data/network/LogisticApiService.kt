@@ -1,5 +1,6 @@
 package com.example.duoblogistics.data.network
 
+import com.example.duoblogistics.data.db.entities.StoredItem
 import com.example.duoblogistics.data.db.entities.Trip
 import com.example.duoblogistics.data.network.interceptors.RequestTokenInterceptor
 import com.example.duoblogistics.data.network.interceptors.ResponseCodeInterceptor
@@ -15,6 +16,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface LogisticApiService {
     @POST("authorize")
@@ -22,6 +24,9 @@ interface LogisticApiService {
 
     @GET("available-trips")
     fun getTrips(): Flowable<List<Trip>>
+
+    @GET("trips/{id}/items")
+    fun getTripStoredItems(@Path("id") tripId: String): Flowable<List<StoredItem>>
 
 /*    @GET("user")
     suspend fun getAuthorizedUser(): Response<AuthorizedUserResponse>

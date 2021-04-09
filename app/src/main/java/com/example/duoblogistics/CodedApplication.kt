@@ -41,6 +41,7 @@ class CodedApplication : Application(), KodeinAware, ViewModelStoreOwner {
         //Database
         bind() from singleton { DuobLogisticsDatabase(instance()) }
         bind() from singleton { instance<DuobLogisticsDatabase>().tripDao() }
+        bind() from singleton { instance<DuobLogisticsDatabase>().storedItemDao() }
 
         //settings
         bind() from singleton { SharedSettings(instance()) }
@@ -55,7 +56,7 @@ class CodedApplication : Application(), KodeinAware, ViewModelStoreOwner {
 
         //data source
         bind<RemoteDataSource>() with singleton { RemoteDataSourceImpl(instance()) }
-        bind<LocalDataSource>() with singleton { LocalDataSourceImpl(instance()) }
+        bind<LocalDataSource>() with singleton { LocalDataSourceImpl(instance(), instance()) }
 
         //repositories
         bind<AuthRepository>() with singleton { AuthRepositoryImpl(instance()) }

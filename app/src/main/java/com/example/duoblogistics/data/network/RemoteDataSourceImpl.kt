@@ -1,5 +1,6 @@
 package com.example.duoblogistics.data.network
 
+import com.example.duoblogistics.data.db.entities.StoredItem
 import com.example.duoblogistics.data.db.entities.Trip
 import com.example.duoblogistics.data.network.models.AuthenticationResponse
 import com.example.duoblogistics.data.network.models.Credentials
@@ -12,5 +13,7 @@ class RemoteDataSourceImpl(
     override fun authorize(credentials: Credentials): Single<AuthenticationResponse> =
         apiService.authorize(credentials)
 
-    override fun getTrips(): Flowable<List<Trip>>  = apiService.getTrips()
+    override fun fetchTrips(): Flowable<List<Trip>>  = apiService.getTrips()
+
+    override fun fetchTripItems(id: String): Flowable<List<StoredItem>> = apiService.getTripStoredItems(id)
 }
