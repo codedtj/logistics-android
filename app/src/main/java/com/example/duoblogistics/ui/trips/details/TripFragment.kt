@@ -6,9 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.duoblogistics.databinding.FragmentTripBinding
 import com.example.duoblogistics.ui.trips.TripsViewModel
 import com.example.duoblogistics.ui.trips.TripsViewModelFactory
+import com.example.duoblogistics.ui.trips.list.TripsAdapter
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
 import org.kodein.di.generic.instance
@@ -48,5 +51,17 @@ class TripFragment : Fragment(), KodeinAware {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val adapter = StoredItemsAdapter(this, tripsViewModel)
+        binding.tripStoredItemsRv.adapter = adapter
+        val divider = DividerItemDecoration(binding.tripStoredItemsRv.context,
+            LinearLayoutManager(this.context).orientation
+        )
+
+        binding.tripStoredItemsRv.addItemDecoration(divider)
+
+        tripsViewModel.storedItems.observe(viewLifecycleOwner, {
+            adapter.submitList(it)
+        })
     }
 }

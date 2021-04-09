@@ -1,21 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
-            name="trip"
-            type="com.example.duoblogistics.data.db.entities.Trip" />
-        <variable
-            name="handler"
-            type="com.example.duoblogistics.internal.interfaces.ElementClickHandler" />
+            name="storedItem"
+            type="com.example.duoblogistics.data.db.entities.StoredItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:onClick="@{(v)->handler.onElementClick()}">
+        android:padding="20dp">
 
         <TextView
             android:id="@+id/tripCode"
@@ -23,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
-            android:text="@{trip.code}"
+            android:text="@{storedItem.code}"
             android:textSize="20sp"
             app:layout_constraintEnd_toStartOf="@+id/tripStatus"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,14 +27,13 @@
 
         <TextView
             android:id="@+id/tripStatus"
-            android:layout_width="150dp"
+            android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
-            android:text="@{trip.status}"
-            android:textSize="20sp"
+            android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tripCode"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.duoblogistics.databinding.FragmentTripsBinding
 import com.example.duoblogistics.ui.trips.TripsViewModel
 import com.example.duoblogistics.ui.trips.TripsViewModelFactory
@@ -50,6 +52,12 @@ class TripsFragment : Fragment(), KodeinAware {
 
         val adapter = TripsAdapter(this, tripsViewModel)
         binding.tripsRv.adapter = adapter
+
+        val divider = DividerItemDecoration(binding.tripsRv.context,
+            LinearLayoutManager(this.context).orientation
+        )
+
+        binding.tripsRv.addItemDecoration(divider)
 
         tripsViewModel.trips.observe(viewLifecycleOwner, {
             adapter.submitList(it)
