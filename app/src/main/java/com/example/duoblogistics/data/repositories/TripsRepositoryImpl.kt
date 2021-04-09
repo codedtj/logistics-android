@@ -21,7 +21,7 @@ class TripsRepositoryImpl(
                         .subscribeOn(Schedulers.computation())
                         .subscribe(
                             {
-                                Log.d("trips-repository", "Trips are save ids: $it")
+                                Log.d("trips-repository", "Trips are save rows: $it")
                             },
                             {
                                 Log.e("trips-repository", "Failed to save trips: $it")
