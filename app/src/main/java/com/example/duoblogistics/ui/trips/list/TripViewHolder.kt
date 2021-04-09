@@ -1,7 +1,7 @@
 package com.example.duoblogistics.ui.trips.list
 
 import androidx.recyclerview.widget.RecyclerView
-import com.example.duoblogistics.data.entities.Trip
+import com.example.duoblogistics.data.db.entities.Trip
 import com.example.duoblogistics.databinding.ViewholderTripBinding
 
 class TripViewHolder(private val dataBinding: ViewholderTripBinding) :

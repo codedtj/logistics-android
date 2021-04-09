@@ -1,6 +1,6 @@
 package com.example.duoblogistics.data.repositories
 
-import com.example.duoblogistics.data.entities.Trip
+import com.example.duoblogistics.data.db.entities.Trip
 import io.reactivex.Flowable
 
 interface TripsRepository {

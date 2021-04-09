@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ListAdapter
-import com.example.duoblogistics.data.entities.Trip
+import com.example.duoblogistics.data.db.entities.Trip
 import com.example.duoblogistics.databinding.ViewholderTripBinding
 import com.example.duoblogistics.ui.trips.TripsViewModel
 

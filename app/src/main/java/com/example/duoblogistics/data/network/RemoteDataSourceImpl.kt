@@ -1,6 +1,6 @@
 package com.example.duoblogistics.data.network
 
-import com.example.duoblogistics.data.entities.Trip
+import com.example.duoblogistics.data.db.entities.Trip
 import com.example.duoblogistics.data.network.models.AuthenticationResponse
 import com.example.duoblogistics.data.network.models.Credentials
 import io.reactivex.Flowable

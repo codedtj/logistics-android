@@ -5,7 +5,7 @@
     <data>
         <variable
             name="trip"
-            type="com.example.duoblogistics.data.entities.Trip" />
+            type="com.example.duoblogistics.data.db.entities.Trip" />
         <variable
             name="handler"
             type="com.example.duoblogistics.internal.interfaces.ElementClickHandler" />

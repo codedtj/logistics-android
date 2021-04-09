@@ -1,7 +1,7 @@
 package com.example.duoblogistics.ui.trips.list
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.duoblogistics.data.entities.Trip
+import com.example.duoblogistics.data.db.entities.Trip
 
 class TripItemDiffCallback : DiffUtil.ItemCallback<Trip>() {
     override fun areItemsTheSame(oldItem: Trip, newItem: Trip): Boolean = oldItem.id === newItem.id

@@ -8,7 +8,7 @@ import android.widget.Button
 import android.widget.TextView
 import com.example.duoblogistics.ui.main.MainViewModel
 import com.example.duoblogistics.R
-import com.example.duoblogistics.data.entities.Code
+import com.example.duoblogistics.data.db.entities.Code
 
 class CodesViewAdapter(
 private val viewModel: MainViewModel

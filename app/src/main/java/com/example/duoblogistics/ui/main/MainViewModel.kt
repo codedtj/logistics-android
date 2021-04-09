@@ -3,7 +3,7 @@ package com.example.duoblogistics.ui.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.duoblogistics.data.entities.Code
+import com.example.duoblogistics.data.db.entities.Code
 import com.example.duoblogistics.extensions.notifyObserver
 
 class MainViewModel() : ViewModel() {

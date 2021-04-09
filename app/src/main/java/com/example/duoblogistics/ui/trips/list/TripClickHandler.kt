@@ -2,7 +2,7 @@ package com.example.duoblogistics.ui.trips.list
 
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.duoblogistics.data.entities.Trip
+import com.example.duoblogistics.data.db.entities.Trip
 import com.example.duoblogistics.internal.interfaces.ElementClickHandler
 import com.example.duoblogistics.ui.trips.TripsViewModel
 
