@@ -12,4 +12,6 @@ interface LocalDataSource {
     fun saveTrips(trips:List<Trip>): Single<List<Long>>
 
     fun getTripStoredItems(id:String): Flowable<List<StoredItem>>
+
+    fun saveStoredItems(storedItems: List<StoredItem>): Single<List<Long>>
 }

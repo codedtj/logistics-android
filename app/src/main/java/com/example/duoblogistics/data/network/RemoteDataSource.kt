@@ -14,7 +14,7 @@ interface RemoteDataSource {
 //
     fun fetchTrips(): Flowable<List<Trip>>
 
-    fun fetchTripItems(id:String) : Flowable<List<StoredItem>>
+    fun fetchTripStoredItems(id:String) : Flowable<List<StoredItem>>
 //
 //    suspend fun loadItem(tripId: String, itemCode: String)
 //

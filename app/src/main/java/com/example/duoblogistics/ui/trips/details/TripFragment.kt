@@ -24,15 +24,23 @@ class TripFragment : Fragment(), KodeinAware {
 
     private val tripsViewModelFactory: TripsViewModelFactory by instance()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
         tripsViewModel = activity?.run {
             ViewModelProvider(this, tripsViewModelFactory)
                 .get(TripsViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
+
+        tripsViewModel.selectedTrip?.apply {
+            tripsViewModel.fetchTripStoredItems(id)
+        }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
         binding = FragmentTripBinding.inflate(inflater)
         return  binding.root

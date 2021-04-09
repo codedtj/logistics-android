@@ -3,6 +3,7 @@ package com.example.duoblogistics.ui.trips
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.duoblogistics.data.db.entities.StoredItem
 import com.example.duoblogistics.data.db.entities.Trip
 import com.example.duoblogistics.data.repositories.TripsRepository
 import com.example.duoblogistics.internal.base.BaseViewModel
@@ -17,6 +18,10 @@ class TripsViewModel(private val tripsRepository: TripsRepository) : BaseViewMod
     val trips: LiveData<List<Trip>>
         get() = mTrips
 
+    private val mStoredItems = MutableLiveData<List<StoredItem>>()
+    val storedItems: LiveData<List<StoredItem>>
+        get() = mStoredItems
+
     fun fetchTrips() {
         compositeDisposable += tripsRepository
             .getTrips()
@@ -30,6 +35,23 @@ class TripsViewModel(private val tripsRepository: TripsRepository) : BaseViewMod
                 },
                 {
                     Log.e("trips-view-model", "Failed to load trips $it")
+                }
+            )
+    }
+
+    fun fetchTripStoredItems(id: String){
+        compositeDisposable += tripsRepository
+            .getTripStoredItems(id)
+            .subscribeOn(Schedulers.computation())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    Log.d("trips-view-model", "Loaded trip stored items $it")
+
+                    mStoredItems.postValue(it)
+                },
+                {
+                    Log.e("trips-view-model", "Failed to load trip stored items $it")
                 }
             )
     }

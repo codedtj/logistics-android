@@ -22,7 +22,7 @@ class TripsRepositoryImpl(
                         .subscribeOn(Schedulers.computation())
                         .subscribe(
                             {
-                                Log.d("trips-repository", "Trips are save rows: $it")
+                                Log.d("trips-repository", "Trips are saved. Rows: $it")
                             },
                             {
                                 Log.e("trips-repository", "Failed to save trips: $it")
@@ -30,14 +30,38 @@ class TripsRepositoryImpl(
                         )
                 },
                 { e ->
-                    Log.e("trips-repository", "Failed to load from remote $e")
+                    Log.e("trips-repository", "Failed to load trip from remote $e")
                 }
             )
 
         return local.getTrips()
     }
 
-    override fun getTripStoredItems(id:String): Flowable<List<StoredItem>> {
+    override fun getTripStoredItems(id: String): Flowable<List<StoredItem>> {
+        val disposable = remote.fetchTripStoredItems(id)
+            .subscribeOn(Schedulers.computation())
+            .subscribe(
+                { storedItems ->
+                    Log.d(
+                        "trips-repository",
+                        "Trip stored items are loaded from remote $storedItems"
+                    )
+                    local.saveStoredItems(storedItems)
+                        .subscribeOn(Schedulers.computation())
+                        .subscribe(
+                            {
+                                Log.d("trips-repository", "Trip stored items are saved. Rows: $it")
+                            },
+                            {
+                                Log.e("trips-repository", "Failed to save trip stored items: $it")
+                            }
+                        )
+                },
+                { e ->
+                    Log.e("trips-repository", "Failed to load trip stored items from remote $e")
+                }
+            )
+
         return local.getTripStoredItems(id)
     }
 }

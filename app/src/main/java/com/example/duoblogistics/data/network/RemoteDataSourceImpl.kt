@@ -15,5 +15,5 @@ class RemoteDataSourceImpl(
 
     override fun fetchTrips(): Flowable<List<Trip>>  = apiService.getTrips()
 
-    override fun fetchTripItems(id: String): Flowable<List<StoredItem>> = apiService.getTripStoredItems(id)
+    override fun fetchTripStoredItems(id: String): Flowable<List<StoredItem>> = apiService.getTripStoredItems(id)
 }

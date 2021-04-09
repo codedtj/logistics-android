@@ -12,7 +12,7 @@ import io.reactivex.Single
 @Dao
 interface TripDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(trip: List<Trip>): Single<List<Long>>
+    fun insert(trips: List<Trip>): Single<List<Long>>
 
     @Query("SELECT * from trips")
     fun getTrips(): Flowable<List<Trip>>

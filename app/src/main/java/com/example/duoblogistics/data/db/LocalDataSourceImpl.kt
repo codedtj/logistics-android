@@ -19,4 +19,7 @@ class LocalDataSourceImpl(
 
     override fun getTripStoredItems(id: String): Flowable<List<StoredItem>> =
         storedItemDao.getTripStoredItems(id)
+
+    override fun saveStoredItems(storedItems: List<StoredItem>): Single<List<Long>> =
+        storedItemDao.insert(storedItems)
 }
