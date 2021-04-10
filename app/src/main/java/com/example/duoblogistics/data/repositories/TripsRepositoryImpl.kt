@@ -3,9 +3,12 @@ package com.example.duoblogistics.data.repositories
 import android.util.Log
 import com.example.duoblogistics.data.db.LocalDataSource
 import com.example.duoblogistics.data.db.entities.StoredItem
+import com.example.duoblogistics.data.db.entities.StoredItemInfo
+import com.example.duoblogistics.data.db.entities.StoredItemWithInfo
 import com.example.duoblogistics.data.db.entities.Trip
 import com.example.duoblogistics.data.network.RemoteDataSource
 import io.reactivex.Flowable
+import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 
 class TripsRepositoryImpl(
@@ -42,33 +45,7 @@ class TripsRepositoryImpl(
             .subscribeOn(Schedulers.computation())
             .subscribe(
                 { storedItemWitnInfos ->
-                    Log.d(
-                        "trips-repository",
-                        "Trip stored items are loaded from remote $storedItemWitnInfos"
-                    )
-
-                    local.saveStoredItemInfos(storedItemWitnInfos.map { it.info })
-                    local.saveStoredItems(storedItemWitnInfos.map {
-                        StoredItem(
-                            it.id,
-                            it.code,
-                            it.status,
-                            it.stored_item_info_id,
-                            it.trip_id,
-                            it.trip_status,
-                            it.scanned
-                        )
-                    })
-
-                        .subscribeOn(Schedulers.computation())
-                        .subscribe(
-                            {
-                                Log.d("trips-repository", "Trip stored items are saved. Rows: $it")
-                            },
-                            {
-                                Log.e("trips-repository", "Failed to save trip stored items: $it")
-                            }
-                        )
+                    saveStoredItemsWithInfo(storedItemWitnInfos)
                 },
                 { e ->
                     Log.e("trips-repository", "Failed to load trip stored items from remote $e")
@@ -76,5 +53,42 @@ class TripsRepositoryImpl(
             )
 
         return local.getTripStoredItems(id)
+    }
+
+    override fun getStoredItemInfo(id: String): Single<StoredItemInfo> = local.getStoredItemInfo(id)
+
+
+    private fun saveStoredItemsWithInfo(storedItemsWithInfo: List<StoredItemWithInfo>) {
+        val o = local.saveStoredItemInfos(storedItemsWithInfo.map { it.info })
+            .subscribeOn(Schedulers.computation())
+            .subscribe(
+                {
+                    Log.d("trips-repository", "Trip stored item info are saved. Rows: $it")
+                },
+                {
+                    Log.e("trips-repository", "Failed to save trip stored items info: $it")
+                }
+            )
+
+        val d = local.saveStoredItems(storedItemsWithInfo.map {
+            StoredItem(
+                it.id,
+                it.code,
+                it.status,
+                it.stored_item_info_id,
+                it.trip_id,
+                it.trip_status,
+                it.scanned
+            )
+        }).subscribeOn(Schedulers.computation())
+            .subscribe(
+                {
+                    Log.d("trips-repository", "Trip stored items are saved. Rows: $it")
+                },
+                {
+                    Log.e("trips-repository", "Failed to save trip stored items: $it")
+                }
+            )
+
     }
 }

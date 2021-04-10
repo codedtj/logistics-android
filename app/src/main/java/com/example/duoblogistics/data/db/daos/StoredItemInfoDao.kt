@@ -14,6 +14,6 @@ interface StoredItemInfoDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(storedItemInfos: List<StoredItemInfo>): Single<List<Long>>
 
-    @Query("SELECT * from stored_item_infos WHERE id= :id")
-    fun getStoredItemInfo(id:String): Flowable<StoredItemInfo>
+    @Query("SELECT * FROM stored_item_infos WHERE id=:id")
+    fun getStoredItemInfo(id:String): Single<StoredItemInfo>
 }

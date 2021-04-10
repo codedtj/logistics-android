@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.duoblogistics.data.db.entities.StoredItem
+import com.example.duoblogistics.data.db.entities.StoredItemInfo
 import com.example.duoblogistics.data.db.entities.Trip
 import com.example.duoblogistics.data.repositories.TripsRepository
 import com.example.duoblogistics.internal.base.BaseViewModel
@@ -14,6 +15,8 @@ import io.reactivex.schedulers.Schedulers
 class TripsViewModel(private val tripsRepository: TripsRepository) : BaseViewModel() {
     var selectedTrip: Trip? = null
 
+    var selectedStoredItem: StoredItem? = null
+
     private val mTrips = MutableLiveData<List<Trip>>()
     val trips: LiveData<List<Trip>>
         get() = mTrips
@@ -21,6 +24,10 @@ class TripsViewModel(private val tripsRepository: TripsRepository) : BaseViewMod
     private val mStoredItems = MutableLiveData<List<StoredItem>>()
     val storedItems: LiveData<List<StoredItem>>
         get() = mStoredItems
+
+    private val mStoredItemInfo = MutableLiveData<StoredItemInfo>()
+    val storedItemInfo: LiveData<StoredItemInfo>
+        get() = mStoredItemInfo
 
     fun fetchTrips() {
         compositeDisposable += tripsRepository
@@ -58,5 +65,19 @@ class TripsViewModel(private val tripsRepository: TripsRepository) : BaseViewMod
 
     fun clearTripStoredItems() {
         this.mStoredItems.postValue(null)
+    }
+
+    fun getStoredItemInfo(id: String) {
+        compositeDisposable += tripsRepository.getStoredItemInfo(id)
+            .subscribeOn(Schedulers.computation())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    mStoredItemInfo.postValue(it)
+                },
+                {
+                    Log.e("trips-view-model", "Failed to load stored item info $it")
+                }
+            )
     }
 }

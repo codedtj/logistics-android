@@ -29,4 +29,7 @@ class LocalDataSourceImpl(
 
     override fun saveStoredItemInfos(infos: List<StoredItemInfo>): Single<List<Long>> =
         storedItemInfoDao.insert(infos)
+
+    override fun getStoredItemInfo(id: String): Single<StoredItemInfo> =
+        storedItemInfoDao.getStoredItemInfo(id)
 }

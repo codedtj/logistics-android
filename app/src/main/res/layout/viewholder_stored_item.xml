@@ -6,12 +6,17 @@
         <variable
             name="storedItem"
             type="com.example.duoblogistics.data.db.entities.StoredItem" />
+
+        <variable
+            name="handler"
+            type="com.example.duoblogistics.internal.interfaces.ElementClickHandler" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp">
+        android:padding="20dp"
+        android:onClick="@{(v)->handler.onElementClick()}">
 
         <TextView
             android:id="@+id/tripCode"

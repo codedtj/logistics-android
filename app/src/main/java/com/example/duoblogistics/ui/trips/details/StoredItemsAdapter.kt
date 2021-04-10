@@ -8,10 +8,10 @@ import com.example.duoblogistics.data.db.entities.StoredItem
 import com.example.duoblogistics.databinding.ViewholderStoredItemBinding
 import com.example.duoblogistics.ui.trips.TripsViewModel
 
-class StoredItemsAdapter (
+class StoredItemsAdapter(
     private val fragment: Fragment,
     private val vm: TripsViewModel
-        ): ListAdapter<StoredItem, StoredItemViewHolder>(StoredItemDiffCallback()) {
+) : ListAdapter<StoredItem, StoredItemViewHolder>(StoredItemDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoredItemViewHolder {
         return StoredItemViewHolder(
             ViewholderStoredItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -22,6 +22,7 @@ class StoredItemsAdapter (
         val item = getItem(position)
         holder.bind(item)
         val dataBinding = holder.getDataBinding()
+        dataBinding.handler = StoredItemClickHandler(fragment, item, vm)
 //        dataBinding.handler = TripClickHandler(fragment, item, vm)
     }
 }

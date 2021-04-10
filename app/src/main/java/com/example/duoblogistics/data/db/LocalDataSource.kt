@@ -18,4 +18,6 @@ interface LocalDataSource {
     fun saveStoredItems(storedItems: List<StoredItem>): Single<List<Long>>
 
     fun saveStoredItemInfos(infos: List<StoredItemInfo>): Single<List<Long>>
+
+    fun getStoredItemInfo(id: String): Single<StoredItemInfo>
 }

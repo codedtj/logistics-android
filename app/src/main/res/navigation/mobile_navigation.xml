@@ -22,14 +22,22 @@
     <fragment
         android:id="@+id/navigate_to_trip"
         android:name="com.example.duoblogistics.ui.trips.details.TripFragment"
-        android:label="Рейс: {code}"
-        tools:layout="@layout/fragment_trip"/>
+        android:label="Товар: {code}"
+        tools:layout="@layout/fragment_trip">
+        <action
+            android:id="@+id/show_stored_item_details"
+            app:destination="@id/navigation_to_stored_item">
+            <argument
+                android:name="code"
+                app:argType="string"/>
+        </action>
+    </fragment>
 
-<!--    <fragment-->
-<!--        android:id="@+id/navigation_notifications"-->
-<!--        android:name="com.example.duoblogistics.ui.notifications.NotificationsFragment"-->
-<!--        android:label="@string/title_notifications"-->
-<!--        tools:layout="@layout/fragment_notifications" />-->
+    <fragment
+        android:id="@+id/navigation_to_stored_item"
+        android:name="com.example.duoblogistics.ui.trips.storedItem.StoredItemFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_stored_item" />
 
     <fragment
         android:id="@+id/navigation_barcode_scanner"
