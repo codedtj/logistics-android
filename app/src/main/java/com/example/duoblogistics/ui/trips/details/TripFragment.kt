@@ -67,6 +67,6 @@ class TripFragment : Fragment(), KodeinAware {
 
     override fun onDestroy() {
         super.onDestroy()
-//        tripsViewModel.clearTripStoredItems()
+        tripsViewModel.clearTripStoredItems()
     }
 }
