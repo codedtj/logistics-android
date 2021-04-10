@@ -1,6 +1,7 @@
 package com.example.duoblogistics.data.network
 
 import com.example.duoblogistics.data.db.entities.StoredItem
+import com.example.duoblogistics.data.db.entities.StoredItemWithInfo
 import com.example.duoblogistics.data.db.entities.Trip
 import com.example.duoblogistics.data.network.interceptors.RequestTokenInterceptor
 import com.example.duoblogistics.data.network.interceptors.ResponseCodeInterceptor
@@ -26,7 +27,7 @@ interface LogisticApiService {
     fun getTrips(): Flowable<List<Trip>>
 
     @GET("trips/{id}/items")
-    fun getTripStoredItems(@Path("id") tripId: String): Flowable<List<StoredItem>>
+    fun getTripStoredItems(@Path("id") tripId: String): Flowable<List<StoredItemWithInfo>>
 
 /*    @GET("user")
     suspend fun getAuthorizedUser(): Response<AuthorizedUserResponse>

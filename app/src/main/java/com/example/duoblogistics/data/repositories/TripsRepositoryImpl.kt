@@ -41,12 +41,24 @@ class TripsRepositoryImpl(
         val disposable = remote.fetchTripStoredItems(id)
             .subscribeOn(Schedulers.computation())
             .subscribe(
-                { storedItems ->
+                { storedItemWitnInfos ->
                     Log.d(
                         "trips-repository",
-                        "Trip stored items are loaded from remote $storedItems"
+                        "Trip stored items are loaded from remote $storedItemWitnInfos"
                     )
-                    local.saveStoredItems(storedItems)
+
+                    local.saveStoredItemInfos(storedItemWitnInfos.map { it.info })
+                    local.saveStoredItems(storedItemWitnInfos.map {
+                        StoredItem(
+                            it.id,
+                            it.code,
+                            it.status,
+                            it.stored_item_info_id,
+                            it.trip_id,
+                            it.trip_status,
+                            it.scanned
+                        )
+                    })
                         .subscribeOn(Schedulers.computation())
                         .subscribe(
                             {
