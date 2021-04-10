@@ -64,7 +64,7 @@ class TripFragment : Fragment(), KodeinAware {
         tripsViewModel.storedItems.observe(viewLifecycleOwner, { storedItems ->
             if (storedItems != null) {
                 adapter.submitList(storedItems)
-                binding.scannedItemsCounter.text = storedItems.count { it.scanned }.toString()
+                binding.scannedItemsCounter.text = "Отсканировано " + storedItems.count { it.scanned }.toString()
             }
         })
     }
