@@ -22,7 +22,7 @@
     <fragment
         android:id="@+id/navigate_to_trip"
         android:name="com.example.duoblogistics.ui.trips.details.TripFragment"
-        android:label="Товар: {code}"
+        android:label="Рейс: {code}"
         tools:layout="@layout/fragment_trip">
         <action
             android:id="@+id/show_stored_item_details"
@@ -36,7 +36,7 @@
     <fragment
         android:id="@+id/navigation_to_stored_item"
         android:name="com.example.duoblogistics.ui.trips.storedItem.StoredItemFragment"
-        android:label="@string/title_notifications"
+        android:label="Товар: {code}"
         tools:layout="@layout/fragment_stored_item" />
 
     <fragment
