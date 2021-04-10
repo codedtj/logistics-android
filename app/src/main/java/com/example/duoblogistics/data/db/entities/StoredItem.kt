@@ -12,13 +12,14 @@ import androidx.room.*
             onDelete = ForeignKey.CASCADE,
             onUpdate = ForeignKey.CASCADE
         ),
-        ForeignKey(
-            entity = StoredItemInfo::class,
-            parentColumns = arrayOf("id"),
-            childColumns = arrayOf("stored_item_info_id"),
-            onDelete = ForeignKey.NO_ACTION,
-            onUpdate = ForeignKey.CASCADE
-        )],
+//        ForeignKey(
+//            entity = StoredItemInfo::class,
+//            parentColumns = arrayOf("id"),
+//            childColumns = arrayOf("stored_item_info_id"),
+//            onDelete = ForeignKey.NO_ACTION,
+//            onUpdate = ForeignKey.CASCADE
+//        )
+                  ],
     indices = [
         Index(value = ["trip_id", "stored_item_info_id"])
     ]

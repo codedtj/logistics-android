@@ -64,4 +64,9 @@ class TripFragment : Fragment(), KodeinAware {
             adapter.submitList(it)
         })
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+//        tripsViewModel.clearTripStoredItems()
+    }
 }

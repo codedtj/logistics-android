@@ -59,6 +59,7 @@ class TripsRepositoryImpl(
                             it.scanned
                         )
                     })
+
                         .subscribeOn(Schedulers.computation())
                         .subscribe(
                             {

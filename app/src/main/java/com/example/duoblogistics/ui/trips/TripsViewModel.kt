@@ -55,4 +55,8 @@ class TripsViewModel(private val tripsRepository: TripsRepository) : BaseViewMod
                 }
             )
     }
+
+    fun clearTripStoredItems(){
+        this.mStoredItems.postValue(null)
+    }
 }
