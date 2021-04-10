@@ -51,7 +51,7 @@ class StoredItemFragment : Fragment(), KodeinAware {
             binding.storedItemWidth.text = "Ширина: " + it.width.toString()
             binding.storedItemLength.text = "Длина: " + it.length.toString()
             binding.storedItemWeight.text = "Вес: " + it.weight.toString()
-            binding.storedItemOwnerCode.text = "Вес: " + it.owner_code
+            binding.storedItemOwnerCode.text = "Владелец: " + it.owner_code
         })
 
         tripsViewModel.selectedStoredItem?.apply {
