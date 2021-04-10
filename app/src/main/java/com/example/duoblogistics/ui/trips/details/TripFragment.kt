@@ -46,7 +46,7 @@ class TripFragment : Fragment(), KodeinAware {
     ): View? {
 
         binding = FragmentTripBinding.inflate(inflater)
-        return  binding.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -54,14 +54,18 @@ class TripFragment : Fragment(), KodeinAware {
 
         val adapter = StoredItemsAdapter(this, tripsViewModel)
         binding.tripStoredItemsRv.adapter = adapter
-        val divider = DividerItemDecoration(binding.tripStoredItemsRv.context,
+        val divider = DividerItemDecoration(
+            binding.tripStoredItemsRv.context,
             LinearLayoutManager(this.context).orientation
         )
 
         binding.tripStoredItemsRv.addItemDecoration(divider)
 
-        tripsViewModel.storedItems.observe(viewLifecycleOwner, {
-            adapter.submitList(it)
+        tripsViewModel.storedItems.observe(viewLifecycleOwner, { storedItems ->
+            if (storedItems != null) {
+                adapter.submitList(storedItems)
+                binding.scannedItemsCounter.text = storedItems.count { it.scanned }.toString()
+            }
         })
     }
 
