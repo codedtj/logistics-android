@@ -39,7 +39,7 @@ class TripsViewModel(private val tripsRepository: TripsRepository) : BaseViewMod
             )
     }
 
-    fun fetchTripStoredItems(id: String){
+    fun fetchTripStoredItems(id: String) {
         compositeDisposable += tripsRepository
             .getTripStoredItems(id)
             .subscribeOn(Schedulers.computation())
@@ -47,8 +47,8 @@ class TripsViewModel(private val tripsRepository: TripsRepository) : BaseViewMod
             .subscribe(
                 {
                     Log.d("trips-view-model", "Loaded trip stored items $it")
-
-                    mStoredItems.postValue(it)
+                    if (it.firstOrNull()?.trip_id == selectedTrip?.id)
+                        mStoredItems.postValue(it)
                 },
                 {
                     Log.e("trips-view-model", "Failed to load trip stored items $it")
@@ -56,7 +56,7 @@ class TripsViewModel(private val tripsRepository: TripsRepository) : BaseViewMod
             )
     }
 
-    fun clearTripStoredItems(){
+    fun clearTripStoredItems() {
         this.mStoredItems.postValue(null)
     }
 }
