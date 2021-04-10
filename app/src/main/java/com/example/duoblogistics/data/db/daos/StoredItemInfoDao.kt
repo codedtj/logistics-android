@@ -7,6 +7,7 @@ import androidx.room.Query
 import com.example.duoblogistics.data.db.entities.StoredItem
 import com.example.duoblogistics.data.db.entities.StoredItemInfo
 import io.reactivex.Flowable
+import io.reactivex.Maybe
 import io.reactivex.Single
 
 @Dao
@@ -15,5 +16,5 @@ interface StoredItemInfoDao {
     fun insert(storedItemInfos: List<StoredItemInfo>): Single<List<Long>>
 
     @Query("SELECT * FROM stored_item_infos WHERE id=:id")
-    fun getStoredItemInfo(id:String): Single<StoredItemInfo>
+    fun getStoredItemInfo(id: String): Maybe<StoredItemInfo>
 }

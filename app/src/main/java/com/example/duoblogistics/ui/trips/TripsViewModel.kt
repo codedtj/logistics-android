@@ -63,9 +63,9 @@ class TripsViewModel(private val tripsRepository: TripsRepository) : BaseViewMod
             )
     }
 
-    fun clearTripStoredItems() {
-        this.mStoredItems.postValue(null)
-    }
+//    fun clearTripStoredItems() {
+//        this.mStoredItems.postValue(null)
+//    }
 
     fun getStoredItemInfo(id: String) {
         compositeDisposable += tripsRepository.getStoredItemInfo(id)

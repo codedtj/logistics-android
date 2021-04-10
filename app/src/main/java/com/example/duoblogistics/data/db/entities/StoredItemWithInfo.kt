@@ -1,7 +1,5 @@
 package com.example.duoblogistics.data.db.entities
 
-import androidx.room.Relation
-
 
 data class StoredItemWithInfo(
     val id: String,
@@ -11,10 +9,5 @@ data class StoredItemWithInfo(
     val trip_id: String,
     val trip_status: String,
     val scanned: Boolean = false,
-
-    @Relation(
-        parentColumn = "stored_item_info_id",
-        entityColumn = "id"
-    )
     val info: StoredItemInfo
 )

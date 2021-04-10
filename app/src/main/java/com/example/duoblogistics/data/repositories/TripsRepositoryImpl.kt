@@ -8,6 +8,7 @@ import com.example.duoblogistics.data.db.entities.StoredItemWithInfo
 import com.example.duoblogistics.data.db.entities.Trip
 import com.example.duoblogistics.data.network.RemoteDataSource
 import io.reactivex.Flowable
+import io.reactivex.Maybe
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 
@@ -42,7 +43,7 @@ class TripsRepositoryImpl(
 
     override fun getTripStoredItems(id: String): Flowable<List<StoredItem>> {
         val disposable = remote.fetchTripStoredItems(id)
-            .subscribeOn(Schedulers.computation())
+            .subscribeOn(Schedulers.newThread())
             .subscribe(
                 { storedItemWitnInfos ->
                     saveStoredItemsWithInfo(storedItemWitnInfos)
@@ -55,7 +56,7 @@ class TripsRepositoryImpl(
         return local.getTripStoredItems(id)
     }
 
-    override fun getStoredItemInfo(id: String): Single<StoredItemInfo> = local.getStoredItemInfo(id)
+    override fun getStoredItemInfo(id: String): Maybe<StoredItemInfo> = local.getStoredItemInfo(id)
 
 
     private fun saveStoredItemsWithInfo(storedItemsWithInfo: List<StoredItemWithInfo>) {
@@ -63,7 +64,7 @@ class TripsRepositoryImpl(
             .subscribeOn(Schedulers.computation())
             .subscribe(
                 {
-                    Log.d("trips-repository", "Trip stored item info are saved. Rows: $it")
+                    Log.d("trips-repository", "Trip stored item info are saved. $storedItemsWithInfo Rows: $it")
                 },
                 {
                     Log.e("trips-repository", "Failed to save trip stored items info: $it")

@@ -1,7 +1,6 @@
 package com.example.duoblogistics.data.db.entities
 
 import androidx.room.Entity
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
 
 @Entity(
@@ -15,5 +14,6 @@ data class StoredItemInfo(
     val weight: Double,
     val height: Double,
     val length: Double,
-    val width: Double
+    val width: Double,
+    val owner_code: String
 )

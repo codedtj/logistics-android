@@ -4,6 +4,7 @@ import com.example.duoblogistics.data.db.entities.StoredItem
 import com.example.duoblogistics.data.db.entities.StoredItemInfo
 import com.example.duoblogistics.data.db.entities.Trip
 import io.reactivex.Flowable
+import io.reactivex.Maybe
 import io.reactivex.Single
 
 interface TripsRepository {
@@ -11,7 +12,7 @@ interface TripsRepository {
 
     fun getTripStoredItems(id:String): Flowable<List<StoredItem>>
 
-    fun getStoredItemInfo(id:String): Single<StoredItemInfo>
+    fun getStoredItemInfo(id:String): Maybe<StoredItemInfo>
 
 //    suspend fun loadItem(tripId: String, itemCode: String)
 //
