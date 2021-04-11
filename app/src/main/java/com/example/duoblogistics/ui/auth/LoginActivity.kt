@@ -66,7 +66,9 @@ class LoginActivity : AppCompatActivity(), KodeinAware {
 
     private fun launchMainActivity() {
         val activityIntent = Intent(this, MainActivity::class.java)
+        activityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(activityIntent)
+        finish()
     }
 
     private fun authorize() {
