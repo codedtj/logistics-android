@@ -87,9 +87,19 @@ class TripsViewModel(
 
     fun scanStoredItem(code: String) {
         this.mStoredItems.value?.apply {
-            val storedItem =  first { it.code == code }
-            storedItem.scanned = true
-            storedItemRepository.updateStoredItem(storedItem)
+            val storedItem = firstOrNull { it.code == code }
+            storedItem?.apply {
+                storedItem.scanned = true
+                storedItemRepository.updateStoredItem(storedItem).subscribeOn(Schedulers.computation())
+                    .subscribe(
+                        {
+                            Log.d("trips-view-model", "Stored item updated $storedItem ")
+                        },
+                        {
+                            Log.e("trips-view-model", "Failed to update stored item $storedItem")
+                        }
+                    )
+            }
         }
     }
 }
