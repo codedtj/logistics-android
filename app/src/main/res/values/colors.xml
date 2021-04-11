@@ -20,6 +20,7 @@
   <color name="barcode_reticle_stroke">#40000000</color>
   <color name="barcode_field_value">#797979</color>
   <color name="barcode_field_box_stroke">#757575</color>
+  <color name="success">#4CAF50</color>
   <color name="product_description">#5F6368</color>
   <color name="purple_200">#E15EF8</color>
   <color name="purple_500">#BB30D3</color>
