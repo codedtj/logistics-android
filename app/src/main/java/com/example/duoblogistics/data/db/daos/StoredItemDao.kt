@@ -1,10 +1,8 @@
 package com.example.duoblogistics.data.db.daos
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.duoblogistics.data.db.entities.StoredItem
+import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
 
@@ -15,4 +13,7 @@ interface StoredItemDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(storedItems: List<StoredItem>): Single<List<Long>>
+
+    @Update
+    fun update(storedItem: StoredItem): Completable
 }

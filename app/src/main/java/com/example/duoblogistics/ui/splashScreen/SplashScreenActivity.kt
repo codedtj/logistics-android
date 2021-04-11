@@ -9,8 +9,8 @@ import com.example.duoblogistics.R
 import com.example.duoblogistics.internal.utils.SharedSettings
 import com.example.duoblogistics.ui.auth.LoginActivity
 import com.example.duoblogistics.ui.main.MainActivity
-import com.example.duoblogistics.ui.main.MainViewModel
-import com.example.duoblogistics.ui.main.MainViewModelFactory
+import com.example.duoblogistics.ui.main.AppViewModel
+import com.example.duoblogistics.ui.main.AppViewModelFactory
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.closestKodein
@@ -20,9 +20,9 @@ class SplashScreenActivity : AppCompatActivity(), KodeinAware {
 
     override val kodein: Kodein by closestKodein()
 
-    private val mainViewModelFactory: MainViewModelFactory by instance()
+    private val appViewModelFactory: AppViewModelFactory by instance()
 
-    private lateinit var vm: MainViewModel
+    private lateinit var vm: AppViewModel
 
     private val settings: SharedSettings by instance()
 
@@ -30,8 +30,8 @@ class SplashScreenActivity : AppCompatActivity(), KodeinAware {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
 
-        vm = ViewModelProvider(this.application as CodedApplication, mainViewModelFactory)
-            .get(MainViewModel::class.java)
+        vm = ViewModelProvider(this.application as CodedApplication, appViewModelFactory)
+            .get(AppViewModel::class.java)
 
         toLoginActivity();
 

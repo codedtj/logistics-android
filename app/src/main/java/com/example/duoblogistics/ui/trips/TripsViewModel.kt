@@ -6,13 +6,17 @@ import androidx.lifecycle.MutableLiveData
 import com.example.duoblogistics.data.db.entities.StoredItem
 import com.example.duoblogistics.data.db.entities.StoredItemInfo
 import com.example.duoblogistics.data.db.entities.Trip
+import com.example.duoblogistics.data.repositories.StoredItemRepository
 import com.example.duoblogistics.data.repositories.TripsRepository
 import com.example.duoblogistics.internal.base.BaseViewModel
 import com.example.duoblogistics.internal.extensions.plusAssign
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class TripsViewModel(private val tripsRepository: TripsRepository) : BaseViewModel() {
+class TripsViewModel(
+    private val tripsRepository: TripsRepository,
+    private val storedItemRepository: StoredItemRepository
+) : BaseViewModel() {
     var selectedTrip: Trip? = null
 
     var selectedStoredItem: StoredItem? = null
@@ -79,5 +83,13 @@ class TripsViewModel(private val tripsRepository: TripsRepository) : BaseViewMod
                     Log.e("trips-view-model", "Failed to load stored item info $it")
                 }
             )
+    }
+
+    fun scanStoredItem(code: String) {
+        this.mStoredItems.value?.apply {
+            val storedItem =  first { it.code == code }
+            storedItem.scanned = true
+            storedItemRepository.updateStoredItem(storedItem)
+        }
     }
 }

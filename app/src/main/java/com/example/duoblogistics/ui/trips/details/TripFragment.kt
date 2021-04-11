@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.duoblogistics.databinding.FragmentTripBinding
+import com.example.duoblogistics.ui.main.AppViewModel
+import com.example.duoblogistics.ui.main.AppViewModelFactory
 import com.example.duoblogistics.ui.trips.TripsViewModel
 import com.example.duoblogistics.ui.trips.TripsViewModelFactory
 import com.example.duoblogistics.ui.trips.list.TripsAdapter
@@ -25,7 +27,11 @@ class TripFragment : Fragment(), KodeinAware {
 
     private lateinit var tripsViewModel: TripsViewModel
 
+    private lateinit var appViewModel: AppViewModel
+
     private val tripsViewModelFactory: TripsViewModelFactory by instance()
+
+    private val appViewModelFactory: AppViewModelFactory by instance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,9 +41,18 @@ class TripFragment : Fragment(), KodeinAware {
                 .get(TripsViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
 
+        appViewModel = activity?.run {
+            ViewModelProvider(this, appViewModelFactory)
+                .get(AppViewModel::class.java)
+        } ?: throw Exception("Invalid Activity")
+
         tripsViewModel.selectedTrip?.apply {
             tripsViewModel.fetchTripStoredItems(id)
         }
+
+        appViewModel.code.observe(this, {
+            tripsViewModel.scanStoredItem(it)
+        })
     }
 
     override fun onCreateView(
@@ -64,7 +79,8 @@ class TripFragment : Fragment(), KodeinAware {
         tripsViewModel.storedItems.observe(viewLifecycleOwner, { storedItems ->
             if (storedItems != null) {
                 adapter.submitList(storedItems)
-                binding.scannedItemsCounter.text = "Отсканировано " + storedItems.count { it.scanned }.toString()
+                binding.scannedItemsCounter.text =
+                    "Отсканировано " + storedItems.count { it.scanned }.toString()
             }
         })
     }

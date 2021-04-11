@@ -5,6 +5,7 @@ import com.example.duoblogistics.data.db.entities.StoredItem
 import com.example.duoblogistics.data.db.entities.StoredItemInfo
 import com.example.duoblogistics.data.db.entities.StoredItemWithInfo
 import com.example.duoblogistics.data.db.entities.Trip
+import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.Single
@@ -21,4 +22,6 @@ interface LocalDataSource {
     fun saveStoredItemInfos(infos: List<StoredItemInfo>): Single<List<Long>>
 
     fun getStoredItemInfo(id: String): Maybe<StoredItemInfo>
+
+    fun updateStoredItem(storedItem:StoredItem):Completable
 }

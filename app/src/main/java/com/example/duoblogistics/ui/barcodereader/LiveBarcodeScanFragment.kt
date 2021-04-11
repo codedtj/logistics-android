@@ -11,21 +11,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.example.duoblogistics.ui.main.MainActivity
-import com.example.duoblogistics.ui.main.MainViewModel
+import com.example.duoblogistics.ui.main.AppViewModel
 import com.example.duoblogistics.R
 import com.example.duoblogistics.barcode.barcodedetection.BarcodeProcessor
 import com.example.duoblogistics.ui.camera.CameraSource
 import com.example.duoblogistics.ui.camera.CameraSourcePreview
 import com.example.duoblogistics.ui.camera.GraphicOverlay
 import com.example.duoblogistics.ui.camera.WorkflowModel
+import com.example.duoblogistics.ui.main.AppViewModelFactory
 import com.example.duoblogistics.ui.settings.SettingsActivity
+import com.example.duoblogistics.ui.trips.TripsViewModel
+import com.example.duoblogistics.ui.trips.TripsViewModelFactory
 import com.google.android.gms.common.internal.Objects
 import com.google.android.material.chip.Chip
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.x.closestKodein
+import org.kodein.di.generic.instance
 import java.io.IOException
 
-class LiveBarcodeScanFragment : Fragment(), View.OnClickListener {
+class LiveBarcodeScanFragment : Fragment(), View.OnClickListener, KodeinAware {
     private var cameraSource: CameraSource? = null
     private var preview: CameraSourcePreview? = null
     private var graphicOverlay: GraphicOverlay? = null
@@ -36,7 +43,11 @@ class LiveBarcodeScanFragment : Fragment(), View.OnClickListener {
     private var workflowModel: WorkflowModel? = null
     private var currentWorkflowState: WorkflowModel.WorkflowState? = null
 
-    private lateinit var mainViewModel: MainViewModel
+    override val kodein by closestKodein()
+
+    private lateinit var appViewModel: AppViewModel
+
+    private val appViewModelFactory: AppViewModelFactory by instance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -71,7 +82,10 @@ class LiveBarcodeScanFragment : Fragment(), View.OnClickListener {
             setOnClickListener(this@LiveBarcodeScanFragment)
         }
 
-        mainViewModel = (this.activity as MainActivity).mainViewModel
+        appViewModel = activity?.run {
+            ViewModelProvider(this, appViewModelFactory)
+                .get(AppViewModel::class.java)
+        } ?: throw Exception("Invalid Activity")
 
         setUpWorkflowModel()
     }
@@ -202,7 +216,7 @@ class LiveBarcodeScanFragment : Fragment(), View.OnClickListener {
             if (barcode != null) {
                 Log.d("RESULTING_CODE", barcode.rawValue.toString())
 
-                mainViewModel.pushCode(barcode.rawValue.toString())
+                appViewModel.pushCode(barcode.rawValue.toString())
 
                 workflowModel?.setWorkflowState(WorkflowModel.WorkflowState.DETECTING)
 

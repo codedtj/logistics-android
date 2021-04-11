@@ -23,9 +23,9 @@ class MainActivity : AppCompatActivity(), KodeinAware {
 
     override val kodein by closestKodein()
 
-    private val mainViewModelFactory: MainViewModelFactory by instance()
+    private val appViewModelFactory: AppViewModelFactory by instance()
 
-    lateinit var mainViewModel: MainViewModel
+    lateinit var appViewModel: AppViewModel
 
     private val CAMERA_PERMISSION_CODE = 100
 
@@ -47,17 +47,8 @@ class MainActivity : AppCompatActivity(), KodeinAware {
 
         checkPermission()
 
-        mainViewModel = ViewModelProvider(this, mainViewModelFactory)
-            .get(MainViewModel::class.java)
-
-        startUp()
-    }
-
-
-    private fun startUp() {
-        mainViewModel.codes.observe(this, Observer {
-//            this.playSuccessSound()
-        })
+        appViewModel = ViewModelProvider(this, appViewModelFactory)
+            .get(AppViewModel::class.java)
     }
 
     private fun checkPermission() {

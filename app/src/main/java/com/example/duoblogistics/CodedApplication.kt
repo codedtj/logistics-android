@@ -9,13 +9,10 @@ import com.example.duoblogistics.data.db.LocalDataSourceImpl
 import com.example.duoblogistics.data.network.RemoteDataSource
 import com.example.duoblogistics.data.network.LogisticApiService
 import com.example.duoblogistics.data.network.RemoteDataSourceImpl
-import com.example.duoblogistics.data.repositories.AuthRepository
-import com.example.duoblogistics.data.repositories.AuthRepositoryImpl
-import com.example.duoblogistics.data.repositories.TripsRepository
-import com.example.duoblogistics.data.repositories.TripsRepositoryImpl
+import com.example.duoblogistics.data.repositories.*
 import com.example.duoblogistics.internal.utils.SharedSettings
 import com.example.duoblogistics.ui.auth.LoginViewModelFactory
-import com.example.duoblogistics.ui.main.MainViewModelFactory
+import com.example.duoblogistics.ui.main.AppViewModelFactory
 import com.example.duoblogistics.ui.trips.TripsViewModelFactory
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -49,8 +46,8 @@ class CodedApplication : Application(), KodeinAware, ViewModelStoreOwner {
 
         //view models
         bind() from provider { LoginViewModelFactory(instance()) }
-        bind() from provider { MainViewModelFactory() }
-        bind() from provider { TripsViewModelFactory(instance()) }
+        bind() from provider { AppViewModelFactory() }
+        bind() from provider { TripsViewModelFactory(instance(), instance()) }
 
         //services
         bind() from singleton { LogisticApiService(instance()) }
@@ -62,6 +59,7 @@ class CodedApplication : Application(), KodeinAware, ViewModelStoreOwner {
         //repositories
         bind<AuthRepository>() with singleton { AuthRepositoryImpl(instance()) }
         bind<TripsRepository>() with singleton { TripsRepositoryImpl(instance(), instance()) }
+        bind<StoredItemRepository>() with singleton { StoredItemRepositoryImpl(instance()) }
 
     }
 }

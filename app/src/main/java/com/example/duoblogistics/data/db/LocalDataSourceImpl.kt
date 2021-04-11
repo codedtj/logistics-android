@@ -7,6 +7,7 @@ import com.example.duoblogistics.data.db.entities.StoredItem
 import com.example.duoblogistics.data.db.entities.StoredItemInfo
 import com.example.duoblogistics.data.db.entities.StoredItemWithInfo
 import com.example.duoblogistics.data.db.entities.Trip
+import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.Single
@@ -33,4 +34,7 @@ class LocalDataSourceImpl(
 
     override fun getStoredItemInfo(id: String): Maybe<StoredItemInfo> =
         storedItemInfoDao.getStoredItemInfo(id)
+
+    override fun updateStoredItem(storedItem: StoredItem): Completable =
+        storedItemDao.update(storedItem)
 }

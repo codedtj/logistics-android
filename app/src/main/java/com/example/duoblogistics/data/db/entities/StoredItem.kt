@@ -32,7 +32,7 @@ data class StoredItem(
     val stored_item_info_id: String,
     val trip_id: String,
     val trip_status: String,
-    val scanned: Boolean = false
+    var scanned: Boolean = false
 )
 
 
