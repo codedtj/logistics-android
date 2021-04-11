@@ -85,5 +85,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_trip">Рейс</string>
     <string name="title_trips">Рейсы</string>
+    <string name="trip_status_active">в пути</string>
+    <string name="trip_status_scheduled">запланирован</string>
 
 </resources>
