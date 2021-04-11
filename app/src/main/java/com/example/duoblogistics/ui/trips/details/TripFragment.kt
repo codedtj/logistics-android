@@ -69,8 +69,8 @@ class TripFragment : Fragment(), KodeinAware {
         })
     }
 
-//    override fun onDestroy() {
-//        super.onDestroy()
-//        tripsViewModel.clearTripStoredItems()
-//    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        tripsViewModel.clearTripStoredItems()
+    }
 }
