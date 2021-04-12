@@ -15,7 +15,7 @@
             app:destination="@id/navigate_to_trip">
             <argument
                 android:name="code"
-                app:argType="string"/>
+                app:argType="string" />
         </action>
     </fragment>
 
@@ -29,8 +29,12 @@
             app:destination="@id/navigation_to_stored_item">
             <argument
                 android:name="code"
-                app:argType="string"/>
+                app:argType="string" />
         </action>
+
+        <action
+            android:id="@+id/navigate_to_select_actions_fragment"
+            app:destination="@id/navigation_to_select_action" />
     </fragment>
 
     <fragment
@@ -38,6 +42,12 @@
         android:name="com.example.duoblogistics.ui.trips.storedItem.StoredItemFragment"
         android:label="Товар: {code}"
         tools:layout="@layout/fragment_stored_item" />
+
+    <fragment
+        android:id="@+id/navigation_to_select_action"
+        android:name="com.example.duoblogistics.ui.trips.actions.SelectActionFragment"
+        android:label="Выберите операцию"
+        tools:layout="@layout/fragment_select_action" />
 
     <fragment
         android:id="@+id/navigation_barcode_scanner"

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.duoblogistics.R
@@ -18,6 +19,7 @@ import com.example.duoblogistics.ui.main.AppViewModel
 import com.example.duoblogistics.ui.main.AppViewModelFactory
 import com.example.duoblogistics.ui.trips.TripsViewModel
 import com.example.duoblogistics.ui.trips.TripsViewModelFactory
+import com.example.duoblogistics.ui.trips.list.TripsFragmentDirections
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
 import org.kodein.di.generic.instance
@@ -117,10 +119,12 @@ class TripFragment : Fragment(), KodeinAware {
                 }
 
             }
+        }
 
-            binding.nextPageFloatingButton.setOnClickListener{
-
-            }
+        binding.nextPageFloatingButton.setOnClickListener {
+            findNavController().navigate(
+                TripFragmentDirections.navigateToSelectActionsFragment()
+            )
         }
 
         tripsViewModel.selectedTrip?.apply {
