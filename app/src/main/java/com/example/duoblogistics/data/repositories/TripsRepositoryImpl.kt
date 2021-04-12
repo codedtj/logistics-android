@@ -20,11 +20,15 @@ class TripsRepositoryImpl(
     private val local: LocalDataSource
 ) : TripsRepository {
     override fun getTrips(): Flowable<List<Trip>> {
-        return remote.fetchTrips().switchMapSingle {
-            Log.d("trips-repository", "Saving trips to db $it")
-            local.saveTrips(it)
-        }.switchMap {
-            local.getTrips()
+//        return remote.fetchTrips().switchMapSingle {
+//            Log.d("trips-repository", "Saving trips to db $it")
+//            local.saveTrips(it)
+//        }.switchMap {
+//            local.getTrips()
+//        }
+
+        return  local.getTrips().doOnNext{
+            remote.fetchTrips().switchMapSingle{ local.saveTrips(it) }
         }
     }
 
