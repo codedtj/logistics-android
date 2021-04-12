@@ -36,8 +36,8 @@ class TripsViewModel(
     fun fetchTrips() {
         compositeDisposable += tripsRepository
             .getTrips()
-            .subscribeOn(Schedulers.computation())
-            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {
                     Log.d("trips-view-model", "Loaded trips $it")
@@ -50,11 +50,27 @@ class TripsViewModel(
             )
     }
 
-    fun fetchTripStoredItems(id: String) {
-        compositeDisposable += tripsRepository
-            .getTripStoredItems(id)
-            .subscribeOn(Schedulers.computation())
-            .observeOn(AndroidSchedulers.mainThread())
+    fun refreshStoredItems(tripId: String) {
+        Log.d("trips-view-model", "Refreshing trip stored items")
+        compositeDisposable += tripsRepository.fetchTripStoredItems(tripId)
+            .doOnCancel { Log.d("dispose-sVMStoredItems", "I am canceled") }
+            .doOnComplete { Log.d("dispose-sVMStoredItems", "I have completed") }
+            .subscribeOn(Schedulers.io())
+            .subscribe(
+                {
+                    Log.d("trips-view-model", "Trips stored items were refreshed $it")
+                },
+                {
+                    Log.e("trips-view-model", "Failed to refresh trip stored items $it")
+                }
+            )
+    }
+
+    fun getTripStoredItems(tripId: String) {
+        compositeDisposable += tripsRepository.getTripStoredItems(tripId)
+            .doOnCancel { Log.d("dispose-vmGetTSI", "I am disposed") }
+            .doOnComplete { Log.d("dispose-vmGetTSI", "I have completed") }
+            .subscribeOn(Schedulers.io())
             .subscribe(
                 {
                     Log.d("trips-view-model", "Loaded trip stored items $it")
@@ -68,7 +84,7 @@ class TripsViewModel(
     }
 
     fun clearTripStoredItems() {
-        this.mStoredItems.postValue(null)
+        this.mStoredItems.postValue(emptyList())
     }
 
     fun getStoredItemInfo(id: String) {
@@ -90,7 +106,8 @@ class TripsViewModel(
             val storedItem = firstOrNull { it.code == code }
             storedItem?.apply {
                 storedItem.scanned = true
-                storedItemRepository.updateStoredItem(storedItem).subscribeOn(Schedulers.computation())
+                storedItemRepository.updateStoredItem(storedItem)
+                    .subscribeOn(Schedulers.computation())
                     .subscribe(
                         {
                             Log.d("trips-view-model", "Stored item updated $storedItem ")

@@ -1,5 +1,6 @@
 package com.example.duoblogistics.data.db
 
+import android.util.Log
 import com.example.duoblogistics.data.db.daos.StoredItemDao
 import com.example.duoblogistics.data.db.daos.StoredItemInfoDao
 import com.example.duoblogistics.data.db.daos.TripDao
@@ -37,4 +38,9 @@ class LocalDataSourceImpl(
 
     override fun updateStoredItem(storedItem: StoredItem): Completable =
         storedItemDao.update(storedItem)
+
+    override fun getStoredItemsById(ids: List<String>): Single<List<StoredItem>> {
+        Log.d("ldsi", "Get Existing Items By Id $ids")
+        return storedItemDao.getStoredItemsWhereIdIn(ids)
+    }
 }

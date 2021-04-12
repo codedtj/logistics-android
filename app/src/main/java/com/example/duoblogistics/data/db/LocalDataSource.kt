@@ -9,6 +9,7 @@ import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.Single
+import java.util.concurrent.Flow
 
 interface LocalDataSource {
     fun getTrips(): Flowable<List<Trip>>
@@ -24,4 +25,6 @@ interface LocalDataSource {
     fun getStoredItemInfo(id: String): Maybe<StoredItemInfo>
 
     fun updateStoredItem(storedItem:StoredItem):Completable
+
+    fun getStoredItemsById(ids: List<String>): Single<List<StoredItem>>
 }

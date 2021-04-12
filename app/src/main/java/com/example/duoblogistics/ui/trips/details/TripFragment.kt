@@ -1,6 +1,7 @@
 package com.example.duoblogistics.ui.trips.details
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,6 +42,8 @@ class TripFragment : Fragment(), KodeinAware {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        Log.d("trip-fragment", "Creating fragment")
+
         tripsViewModel = activity?.run {
             ViewModelProvider(this, tripsViewModelFactory)
                 .get(TripsViewModel::class.java)
@@ -51,19 +54,21 @@ class TripFragment : Fragment(), KodeinAware {
                 .get(AppViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
 
-        tripsViewModel.selectedTrip?.apply {
-            tripsViewModel.fetchTripStoredItems(id)
-        }
-
         appViewModel.code.observe(this, {
             tripsViewModel.scanStoredItem(it)
         })
+
+        tripsViewModel.selectedTrip?.apply {
+            tripsViewModel.refreshStoredItems(id)
+        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        Log.d("trip-fragment", "Creating view")
 
         binding = FragmentTripBinding.inflate(inflater)
         return binding.root
@@ -113,10 +118,21 @@ class TripFragment : Fragment(), KodeinAware {
 
             }
         }
+
+        tripsViewModel.selectedTrip?.apply {
+            tripsViewModel.getTripStoredItems(id)
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         tripsViewModel.clearTripStoredItems()
+        Log.d("trip-fragment", "My view is destroyed")
+    }
+
+    override fun onDestroy() {
+        tripsViewModel.clearDisposables()
+        super.onDestroy()
+        Log.d("trip-fragment", "I am destroyed")
     }
 }

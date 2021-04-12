@@ -2,6 +2,7 @@ package com.example.duoblogistics.data.repositories
 
 import com.example.duoblogistics.data.db.entities.StoredItem
 import com.example.duoblogistics.data.db.entities.StoredItemInfo
+import com.example.duoblogistics.data.db.entities.StoredItemWithInfo
 import com.example.duoblogistics.data.db.entities.Trip
 import io.reactivex.Flowable
 import io.reactivex.Maybe
@@ -11,6 +12,8 @@ interface TripsRepository {
     fun getTrips(): Flowable<List<Trip>>
 
     fun getTripStoredItems(id:String): Flowable<List<StoredItem>>
+
+    fun fetchTripStoredItems(id:String): Flowable<List<Long>>
 
     fun getStoredItemInfo(id:String): Maybe<StoredItemInfo>
 
