@@ -9,8 +9,8 @@ import androidx.room.*
             entity = Trip::class,
             parentColumns = arrayOf("id"),
             childColumns = arrayOf("trip_id"),
-            onDelete = ForeignKey.CASCADE,
-            onUpdate = ForeignKey.CASCADE
+//            onDelete = ForeignKey.CASCADE,
+//            onUpdate = ForeignKey.CASCADE
         ),
 //        ForeignKey(
 //            entity = StoredItemInfo::class,

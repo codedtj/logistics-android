@@ -9,6 +9,7 @@ import com.example.duoblogistics.data.db.entities.Trip
 import com.example.duoblogistics.data.network.RemoteDataSource
 import io.reactivex.Flowable
 import io.reactivex.Maybe
+import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -19,28 +20,32 @@ class TripsRepositoryImpl(
     private val local: LocalDataSource
 ) : TripsRepository {
     override fun getTrips(): Flowable<List<Trip>> {
-        val disposable = remote.fetchTrips()
-            .subscribeOn(Schedulers.computation())
-            .subscribe(
-                { trips ->
-                    Log.d("trips-repository", "Trips are loaded from remote $trips")
-                    local.saveTrips(trips)
-                        .subscribeOn(Schedulers.computation())
-                        .subscribe(
-                            {
-                                Log.d("trips-repository", "Trips are saved. Rows: $it")
-                            },
-                            {
-                                Log.e("trips-repository", "Failed to save trips: $it")
-                            }
-                        )
-                },
-                { e ->
-                    Log.e("trips-repository", "Failed to load trip from remote $e")
-                }
-            )
-
-        return local.getTrips()
+//        val disposable = remote.fetchTrips()
+//            .subscribeOn(Schedulers.computation())
+//            .subscribe(
+//                { trips ->
+//                    Log.d("trips-repository", "Trips are loaded from remote $trips")
+//                    local.saveTrips(trips)
+//                        .subscribeOn(Schedulers.computation())
+//                        .subscribe(
+//                            {
+//                                Log.d("trips-repository", "Trips are saved. Rows: $it")
+//                            },
+//                            {
+//                                Log.e("trips-repository", "Failed to save trips: $it")
+//                            }
+//                        )
+//                },
+//                { e ->
+//                    Log.e("trips-repository", "Failed to load trip from remote $e")
+//                }
+//            )
+        return remote.fetchTrips().switchMapSingle {
+            Log.d("trips-repository", "Saving trips to db $it")
+            local.saveTrips(it)
+        }.switchMap {
+            local.getTrips()
+        }
     }
 
     override fun fetchTripStoredItems(id: String): Flowable<List<Long>> {

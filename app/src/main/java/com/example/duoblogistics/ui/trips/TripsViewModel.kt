@@ -36,7 +36,7 @@ class TripsViewModel(
     fun fetchTrips() {
         compositeDisposable += tripsRepository
             .getTrips()
-            .subscribeOn(Schedulers.io())
+            .subscribeOn(Schedulers.computation())
 //            .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {
