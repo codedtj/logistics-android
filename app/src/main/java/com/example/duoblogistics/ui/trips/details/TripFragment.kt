@@ -94,7 +94,7 @@ class TripFragment : Fragment(), KodeinAware {
             }
         })
 
-        binding.toogleScannerButton.setOnClickListener {
+        binding.toggleScannerButton.setOnClickListener {
             barCodeScannerIsVisible = !barCodeScannerIsVisible
 
             activity?.apply {
@@ -115,6 +115,10 @@ class TripFragment : Fragment(), KodeinAware {
                             remove(fragment)
                         }
                 }
+
+            }
+
+            binding.nextPageFloatingButton.setOnClickListener{
 
             }
         }
