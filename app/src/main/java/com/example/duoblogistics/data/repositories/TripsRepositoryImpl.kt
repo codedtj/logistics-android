@@ -20,26 +20,6 @@ class TripsRepositoryImpl(
     private val local: LocalDataSource
 ) : TripsRepository {
     override fun getTrips(): Flowable<List<Trip>> {
-//        val disposable = remote.fetchTrips()
-//            .subscribeOn(Schedulers.computation())
-//            .subscribe(
-//                { trips ->
-//                    Log.d("trips-repository", "Trips are loaded from remote $trips")
-//                    local.saveTrips(trips)
-//                        .subscribeOn(Schedulers.computation())
-//                        .subscribe(
-//                            {
-//                                Log.d("trips-repository", "Trips are saved. Rows: $it")
-//                            },
-//                            {
-//                                Log.e("trips-repository", "Failed to save trips: $it")
-//                            }
-//                        )
-//                },
-//                { e ->
-//                    Log.e("trips-repository", "Failed to load trip from remote $e")
-//                }
-//            )
         return remote.fetchTrips().switchMapSingle {
             Log.d("trips-repository", "Saving trips to db $it")
             local.saveTrips(it)
@@ -54,17 +34,6 @@ class TripsRepositoryImpl(
     }
 
     override fun getTripStoredItems(id: String): Flowable<List<StoredItem>> {
-//        val disposable = remote.fetchTripStoredItems(id)
-//            .subscribeOn(Schedulers.newThread())
-//            .subscribe(
-//                { storedItemWitnInfos ->
-//                    saveStoredItemsWithInfo(storedItemWitnInfos)
-//                },
-//                { e ->
-//                    Log.e("trips-repository", "Failed to load trip stored items from remote $e")
-//                }
-//            )
-
         return local.getTripStoredItems(id)
     }
 
@@ -89,64 +58,4 @@ class TripsRepositoryImpl(
                 })
             }
     }
-
-//    private fun saveStoredItemsWithInfo(storedItemsWithInfo: List<StoredItemWithInfo>) {
-//        val o = local.saveStoredItemInfos(storedItemsWithInfo.map { it.info })
-//            .doOnDispose { Log.d("dispose-saveSItemInfos", "I am disposed") }
-//            .doOnError { Log.d("dispose-saveSItemInfos", "I have an error") }
-//            .doFinally { Log.d("dispose-saveSItemInfos", "I have finished") }
-//            .subscribeOn(Schedulers.io())
-//            .subscribe(
-//                {
-//                    Log.d(
-//                        "trips-repository",
-//                        "Trip stored item info are saved. $storedItemsWithInfo Rows: $it"
-//                    )
-//                },
-//                {
-//                    Log.e("trips-repository", "Failed to save trip stored items info: $it")
-//                }
-//            )
-//
-//        val d = local.getStoredItemsById(storedItemsWithInfo.map { it.id })
-//            .doOnCancel { Log.d("dispose-getSItemsById", "I am canceled") }
-//            .doOnError { Log.d("dispose-getSItemsById", "I have an error") }
-//            .doOnComplete { Log.d("dispose-getSItemsById", "I have completed") }
-//            .subscribeOn(Schedulers.io())
-//            .subscribe(
-//                { existingStoredItems ->
-//                    Log.d("trips-repository", "Existing stored items : $existingStoredItems")
-//                    val items = storedItemsWithInfo.map { storedItemsWithInfo ->
-//                        StoredItem(
-//                            storedItemsWithInfo.id,
-//                            storedItemsWithInfo.code,
-//                            storedItemsWithInfo.status,
-//                            storedItemsWithInfo.stored_item_info_id,
-//                            storedItemsWithInfo.trip_id,
-//                            storedItemsWithInfo.trip_status,
-//                            existingStoredItems.firstOrNull { it.id == storedItemsWithInfo.id }?.scanned == true
-//                        )
-//                    }
-//
-//                    saveStoredItems(items)
-//                },
-//                {
-//                    Log.e("trips-repository", "Failed to get stored items by id: $it")
-//                }
-//            )
-//    }
-
-//    private fun saveStoredItems(storedItems: List<StoredItem>) {
-//        return local.saveStoredItems(storedItems)
-//            .doOnDispose { Log.d("dispose-saveStoredItems", "I am disposed") }
-//            .doFinally { Log.d("dispose-saveStoredItems", "I have finished") }
-//            .subscribe(
-//                {
-//                    Log.d("trips-repository", "Trip stored items are saved. Rows: $it")
-//                },
-//                {
-//                    Log.e("trips-repository", "Failed to save trip stored items: $it")
-//                }
-//            ).dispose()
-//    }
 }
