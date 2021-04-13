@@ -9,8 +9,9 @@ import androidx.room.PrimaryKey
 data class Action(
     @PrimaryKey(autoGenerate = true)
     val id: Long,
-    val name:String,
+    val name: String,
     val tripId: String,
     val tripToId: String? = null,
-    val branchToId: String? = null
+    val branchToId: String? = null,
+    val status:String = "pending"
 )

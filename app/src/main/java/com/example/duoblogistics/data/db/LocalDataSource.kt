@@ -30,4 +30,6 @@ interface LocalDataSource {
     fun saveActionStoredItems(actionId:Long, storedItems: List<StoredItem>): Single<List<Long>>
 
     fun getActionWithStoredItems(id:Long): Single<ActionWithStoredItems>
+
+    fun getActions(): Single<List<Action>>
 }

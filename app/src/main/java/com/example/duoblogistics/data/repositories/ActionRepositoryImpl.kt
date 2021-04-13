@@ -22,4 +22,6 @@ class ActionRepositoryImpl(
                 localDataSource.saveActionStoredItems(it, storedItems)
             }
     }
+
+    override fun getActions(): Single<List<Action>> = localDataSource.getActions()
 }

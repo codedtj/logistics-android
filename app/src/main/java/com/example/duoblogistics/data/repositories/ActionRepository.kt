@@ -9,4 +9,6 @@ interface ActionRepository {
     fun getActionWithStoredItems(actionId: Long): Single<ActionWithStoredItems>
 
     fun saveActionWithStoredItems(action: Action, storedItems:List<StoredItem>): Single<List<Long>>
+
+    fun getActions(): Single<List<Action>>
 }

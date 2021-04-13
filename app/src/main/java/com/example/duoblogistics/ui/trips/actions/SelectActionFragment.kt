@@ -75,7 +75,7 @@ class SelectActionFragment : Fragment(), KodeinAware {
                     storedItem.scanned
                 }?.let {
                     actionsViewModel.saveActionWithStoredItems(
-                        Action(0, "loadToCar", id),
+                        Action(0, "carToCar", id),
                         it
                     )
                 }

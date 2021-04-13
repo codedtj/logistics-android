@@ -52,4 +52,6 @@ class LocalDataSourceImpl(
 
     override fun getActionWithStoredItems(id:Long): Single<ActionWithStoredItems> =
         actionDao.getActionWithStoredItems(id)
+
+    override fun getActions(): Single<List<Action>> = actionDao.getActions()
 }

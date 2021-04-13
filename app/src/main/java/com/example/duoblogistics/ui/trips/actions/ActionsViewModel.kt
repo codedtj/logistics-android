@@ -18,6 +18,10 @@ class ActionsViewModel(
     val saved: LiveData<Boolean>
         get() = mSaved
 
+    private val mActions = MutableLiveData<List<Action>>()
+    val actions: LiveData<List<Action>>
+        get() = mActions
+
     fun saveActionWithStoredItems(action: Action, storedItems: List<StoredItem>) {
         compositeDisposable += actionRepository.saveActionWithStoredItems(action, storedItems)
             .subscribeOn(Schedulers.computation())
@@ -31,7 +35,19 @@ class ActionsViewModel(
                 })
     }
 
-    fun resetSaved(){
+    fun getActions() {
+        compositeDisposable += actionRepository.getActions()
+            .subscribeOn(Schedulers.computation())
+            .subscribe(
+                {
+                    mActions.postValue(it)
+                },
+                {
+                    Log.e("actions-vm", "Failed to load actions $it")
+                })
+    }
+
+    fun resetSaved() {
         mSaved.postValue(false)
     }
 }

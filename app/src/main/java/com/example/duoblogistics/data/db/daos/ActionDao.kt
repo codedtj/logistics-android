@@ -18,4 +18,7 @@ interface ActionDao {
     @Transaction
     @Query("SELECT * FROM actions WHERE id=:id")
     fun getActionWithStoredItems(id: Long): Single<ActionWithStoredItems>
+
+    @Query("SELECT * FROM actions ORDER BY id DESC")
+    fun getActions(): Single<List<Action>>
 }

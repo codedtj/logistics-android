@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.example.duoblogistics.R
+import com.example.duoblogistics.data.db.entities.Action
 import com.example.duoblogistics.data.db.entities.StoredItem
 
 @BindingAdapter("bind:tripStatusText")
@@ -24,4 +25,22 @@ fun setScannedStoredItemBackground(view: View, storedItem: StoredItem) {
         view.setBackgroundColor(Color.parseColor("#4CAF50"))
     }else
         view.setBackgroundColor(Color.parseColor("#00000000"))
+}
+
+@BindingAdapter("bind:actionText")
+fun setActionText(view:TextView, action: Action){
+    when(action.name){
+        "carToCar" ->  view.text = "C рейса на рейс"
+        "branchToCar" ->  view.text = "Со склада в машину"
+        "carToBranch" ->  view.text = "Из машины в склад"
+        else -> view.text ="НЛО"
+    }
+}
+
+@BindingAdapter("bind:actionLayoutBackground")
+fun setActionLayoutBackground(view:View, status:String){
+    when(status){
+        "pending" -> view.setBackgroundColor(Color.parseColor("#00000000"))
+        "completed" -> view.setBackgroundColor(Color.parseColor("#4CAF50"))
+    }
 }
