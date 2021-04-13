@@ -47,7 +47,18 @@
         android:id="@+id/navigation_to_select_action"
         android:name="com.example.duoblogistics.ui.trips.actions.SelectActionFragment"
         android:label="Выберите операцию"
-        tools:layout="@layout/fragment_select_action" />
+        tools:layout="@layout/fragment_select_action">
+        <action
+            android:id="@+id/navigate_to_actions_list"
+            app:destination="@id/navigation_to_actions_list"/>
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/navigation_to_actions_list"
+        android:name="com.example.duoblogistics.ui.trips.actions.list.ActionsListFragment"
+        android:label="История операций"
+        tools:layout="@layout/fragment_actions_list" />
 
     <fragment
         android:id="@+id/navigation_barcode_scanner"
