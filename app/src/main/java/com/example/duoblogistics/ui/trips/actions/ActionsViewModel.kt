@@ -22,6 +22,8 @@ class ActionsViewModel(
     val actions: LiveData<List<Action>>
         get() = mActions
 
+    var selectedAction: Action? = null
+
     fun saveActionWithStoredItems(action: Action, storedItems: List<StoredItem>) {
         compositeDisposable += actionRepository.saveActionWithStoredItems(action, storedItems)
             .subscribeOn(Schedulers.computation())

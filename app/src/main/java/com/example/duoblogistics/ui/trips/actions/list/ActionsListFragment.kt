@@ -44,7 +44,12 @@ class ActionsListFragment : Fragment(), KodeinAware {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = ActionsAdapter()
+        actionsViewModel = activity?.run {
+            ViewModelProvider(this, actionsViewModelFactory)
+                .get(ActionsViewModel::class.java)
+        } ?: throw Exception("Invalid Activity")
+
+        val adapter = ActionsAdapter(this, actionsViewModel)
         binding.actionsRecyclerViewer.layoutManager =  LinearLayoutManager(this.context)
         binding.actionsRecyclerViewer.adapter = adapter
         val divider = DividerItemDecoration(
@@ -53,11 +58,6 @@ class ActionsListFragment : Fragment(), KodeinAware {
         )
 
         binding.actionsRecyclerViewer.addItemDecoration(divider)
-
-        actionsViewModel = activity?.run {
-            ViewModelProvider(this, actionsViewModelFactory)
-                .get(ActionsViewModel::class.java)
-        } ?: throw Exception("Invalid Activity")
 
         actionsViewModel.actions.observe(viewLifecycleOwner, { actions ->
             if (actions != null) {

@@ -58,7 +58,17 @@
         android:id="@+id/navigation_to_actions_list"
         android:name="com.example.duoblogistics.ui.trips.actions.list.ActionsListFragment"
         android:label="История операций"
-        tools:layout="@layout/fragment_actions_list" />
+        tools:layout="@layout/fragment_actions_list" >
+        <action
+            android:id="@+id/navigate_to_action_details"
+            app:destination="@id/navigation_to_action_details"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_to_action_details"
+        android:name="com.example.duoblogistics.ui.trips.actions.details.ActionDetailsFragment"
+        android:label="Детали операции"
+        tools:layout="@layout/fragment_action_details" />
 
     <fragment
         android:id="@+id/navigation_barcode_scanner"
