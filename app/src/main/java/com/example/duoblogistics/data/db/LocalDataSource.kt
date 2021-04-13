@@ -1,10 +1,7 @@
 package com.example.duoblogistics.data.db
 
 import com.example.duoblogistics.data.db.daos.TripDao
-import com.example.duoblogistics.data.db.entities.StoredItem
-import com.example.duoblogistics.data.db.entities.StoredItemInfo
-import com.example.duoblogistics.data.db.entities.StoredItemWithInfo
-import com.example.duoblogistics.data.db.entities.Trip
+import com.example.duoblogistics.data.db.entities.*
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Maybe
@@ -27,4 +24,10 @@ interface LocalDataSource {
     fun updateStoredItem(storedItem:StoredItem):Completable
 
     fun getStoredItemsById(ids: List<String>): Single<List<StoredItem>>
+
+    fun saveAction(action: Action): Single<Long>
+
+    fun saveActionStoredItems(actionId:Long, storedItems: List<StoredItem>): Single<List<Long>>
+
+    fun getActionWithStoredItems(id:Long): Single<ActionWithStoredItems>
 }

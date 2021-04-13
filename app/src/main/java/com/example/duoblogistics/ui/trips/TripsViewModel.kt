@@ -34,10 +34,23 @@ class TripsViewModel(
         get() = mStoredItemInfo
 
     fun fetchTrips() {
+        compositeDisposable += tripsRepository.fetchTrips()
+            .subscribeOn(Schedulers.io())
+            .subscribe(
+                {
+                    Log.d("trips-view-model", "Trips are fetched $it")
+                },
+                {
+                    Log.e("trips-view-model", "Failed to fetch trips $it")
+                }
+            )
+    }
+
+    fun getTrips() {
         compositeDisposable += tripsRepository
             .getTrips()
             .subscribeOn(Schedulers.computation())
-//            .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {
                     Log.d("trips-view-model", "Loaded trips $it")

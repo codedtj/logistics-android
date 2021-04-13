@@ -11,6 +11,8 @@ import io.reactivex.Single
 interface TripsRepository {
     fun getTrips(): Flowable<List<Trip>>
 
+    fun fetchTrips(): Flowable<List<Long>>
+
     fun getTripStoredItems(id:String): Flowable<List<StoredItem>>
 
     fun fetchTripStoredItems(id:String): Flowable<List<Long>>

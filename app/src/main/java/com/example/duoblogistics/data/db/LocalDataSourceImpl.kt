@@ -1,13 +1,11 @@
 package com.example.duoblogistics.data.db
 
 import android.util.Log
+import com.example.duoblogistics.data.db.daos.ActionDao
 import com.example.duoblogistics.data.db.daos.StoredItemDao
 import com.example.duoblogistics.data.db.daos.StoredItemInfoDao
 import com.example.duoblogistics.data.db.daos.TripDao
-import com.example.duoblogistics.data.db.entities.StoredItem
-import com.example.duoblogistics.data.db.entities.StoredItemInfo
-import com.example.duoblogistics.data.db.entities.StoredItemWithInfo
-import com.example.duoblogistics.data.db.entities.Trip
+import com.example.duoblogistics.data.db.entities.*
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Maybe
@@ -17,11 +15,12 @@ class LocalDataSourceImpl(
     private val tripDao: TripDao,
     private val storedItemDao: StoredItemDao,
     private val storedItemInfoDao: StoredItemInfoDao,
+    private val actionDao: ActionDao
 ) : LocalDataSource {
     override fun getTrips(): Flowable<List<Trip>> = tripDao.getTrips()
 
     override fun saveTrips(trips: List<Trip>): Single<List<Long>> {
-       return tripDao.deleteTripsWhereNotIn(trips.map { it.id }).andThen(tripDao.insert(trips))
+        return tripDao.deleteTripsWhereNotIn(trips.map { it.id }).andThen(tripDao.insert(trips))
     }
 
     override fun getTripStoredItems(id: String): Flowable<List<StoredItem>> =
@@ -39,8 +38,18 @@ class LocalDataSourceImpl(
     override fun updateStoredItem(storedItem: StoredItem): Completable =
         storedItemDao.update(storedItem)
 
-    override fun getStoredItemsById(ids: List<String>): Single<List<StoredItem>> {
-        Log.d("ldsi", "Get Existing Items By Id $ids")
-        return storedItemDao.getStoredItemsWhereIdIn(ids)
-    }
+    override fun getStoredItemsById(ids: List<String>): Single<List<StoredItem>> =
+        storedItemDao.getStoredItemsWhereIdIn(ids)
+
+    override fun saveAction(action: Action): Single<Long> = actionDao.insert(action)
+
+    override fun saveActionStoredItems(
+        actionId: Long,
+        storedItems: List<StoredItem>
+    ): Single<List<Long>> = actionDao.insertActionWithStoredItems(storedItems.map {
+        ActionWithStoredItem(actionId, it.id)
+    })
+
+    override fun getActionWithStoredItems(id:Long): Single<ActionWithStoredItems> =
+        actionDao.getActionWithStoredItems(id)
 }

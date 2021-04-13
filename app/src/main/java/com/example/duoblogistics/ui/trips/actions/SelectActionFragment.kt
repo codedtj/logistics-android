@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.example.duoblogistics.R
+import com.example.duoblogistics.data.db.entities.Action
 import com.example.duoblogistics.databinding.FragmentSelectActionBinding
 import com.example.duoblogistics.databinding.FragmentTripBinding
 import com.example.duoblogistics.ui.trips.TripsViewModel
@@ -24,6 +25,10 @@ class SelectActionFragment : Fragment(), KodeinAware {
 
     private val tripsViewModelFactory: TripsViewModelFactory by instance()
 
+    private lateinit var actionsViewModel: ActionsViewModel
+
+    private val actionsViewModelFactory: ActionsViewModelFactory by instance()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -32,6 +37,14 @@ class SelectActionFragment : Fragment(), KodeinAware {
                 .get(TripsViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
 
+        tripsViewModel.selectedTrip?.let {
+            tripsViewModel.getTripStoredItems(it.id)
+        }
+
+        actionsViewModel = activity?.run {
+            ViewModelProvider(this, actionsViewModelFactory)
+                .get(ActionsViewModel::class.java)
+        } ?: throw Exception("Invalid Activity")
     }
 
     override fun onCreateView(
@@ -40,5 +53,29 @@ class SelectActionFragment : Fragment(), KodeinAware {
     ): View? {
         binding = FragmentSelectActionBinding.inflate(inflater)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.loadToCarBtn.setOnClickListener {
+            tripsViewModel.selectedTrip?.apply {
+                tripsViewModel.storedItems.value?.filter { storedItem ->
+                    storedItem.scanned
+                }?.let {
+                    actionsViewModel.saveActionWithStoredItems(
+                        Action(0, "loadToCar", id),
+                        it
+                    )
+                }
+            }
+
+        }
+        binding.unloadCarBtn.setOnClickListener {
+
+        }
+        binding.transferFromCarToCar.setOnClickListener {
+
+        }
     }
 }

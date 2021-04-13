@@ -1,7 +1,6 @@
 package com.example.duoblogistics.ui.trips.list
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,6 +41,7 @@ class TripsFragment : Fragment(), KodeinAware {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         binding = FragmentTripsBinding.inflate(inflater)
 
         return binding.root;
@@ -62,6 +62,8 @@ class TripsFragment : Fragment(), KodeinAware {
         tripsViewModel.trips.observe(viewLifecycleOwner, {
             adapter.submitList(it)
         })
+
+        tripsViewModel.getTrips()
     }
 }
 
