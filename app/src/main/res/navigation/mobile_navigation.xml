@@ -68,7 +68,15 @@
         android:id="@+id/navigation_to_action_details"
         android:name="com.example.duoblogistics.ui.trips.actions.details.ActionDetailsFragment"
         android:label="Детали операции"
-        tools:layout="@layout/fragment_action_details" />
+        tools:layout="@layout/fragment_action_details">
+        <action
+            android:id="@+id/show_stored_item_details"
+            app:destination="@id/navigation_to_stored_item">
+            <argument
+                android:name="code"
+                app:argType="string" />
+        </action>
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_barcode_scanner"

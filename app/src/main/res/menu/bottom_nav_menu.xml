@@ -4,7 +4,7 @@
     <item
         android:id="@+id/navigation_trips"
         android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/title_home" />
+        android:title="@string/title_trips" />
 
 <!--    <item-->
 <!--        android:id="@+id/navigation_dashboard"-->
@@ -17,8 +17,8 @@
 <!--        android:title="@string/title_notifications" />-->
 
     <item
-        android:id="@+id/navigation_barcode_scanner"
-        android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="Scanner" />
+        android:id="@+id/navigation_to_actions_list"
+        android:icon="@drawable/ic_list"
+        android:title="@string/title_actions" />
 
 </menu>

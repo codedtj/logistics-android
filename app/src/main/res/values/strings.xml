@@ -87,5 +87,6 @@
     <string name="title_trips">Рейсы</string>
     <string name="trip_status_active">в пути</string>
     <string name="trip_status_scheduled">запланирован</string>
+    <string name="title_actions">Операции</string>
 
 </resources>
