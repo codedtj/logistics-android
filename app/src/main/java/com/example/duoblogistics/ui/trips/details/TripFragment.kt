@@ -19,7 +19,6 @@ import com.example.duoblogistics.ui.main.AppViewModel
 import com.example.duoblogistics.ui.main.AppViewModelFactory
 import com.example.duoblogistics.ui.trips.TripsViewModel
 import com.example.duoblogistics.ui.trips.TripsViewModelFactory
-import com.example.duoblogistics.ui.trips.list.TripsFragmentDirections
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
 import org.kodein.di.generic.instance
