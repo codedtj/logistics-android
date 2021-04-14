@@ -86,6 +86,7 @@ class TripFragment : Fragment(), KodeinAware {
         )
 
         binding.tripStoredItemsRv.addItemDecoration(divider)
+        binding.tripStoredItemsRv.itemAnimator = null
 
         tripsViewModel.storedItems.observe(viewLifecycleOwner, { storedItems ->
             if (storedItems != null) {

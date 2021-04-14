@@ -52,6 +52,7 @@ class TripsFragment : Fragment(), KodeinAware {
 
         val adapter = TripsAdapter(this, tripsViewModel)
         binding.tripsRv.adapter = adapter
+        binding.tripsRv.itemAnimator = null
 
         val divider = DividerItemDecoration(binding.tripsRv.context,
             LinearLayoutManager(this.context).orientation

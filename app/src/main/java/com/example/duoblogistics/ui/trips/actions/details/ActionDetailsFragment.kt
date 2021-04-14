@@ -70,6 +70,7 @@ class ActionDetailsFragment : Fragment(), KodeinAware {
         )
 
         binding.actionStoredItemsRv.addItemDecoration(divider)
+        binding.actionStoredItemsRv.itemAnimator  = null
 
         actionsViewModel.actionWithStoredItems.observe(viewLifecycleOwner, {
             when (it.action.status) {
