@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.duoblogistics.data.db.entities.Action
+import com.example.duoblogistics.data.db.entities.ActionWithStoredItems
 import com.example.duoblogistics.data.db.entities.StoredItem
 import com.example.duoblogistics.data.db.entities.Trip
 import com.example.duoblogistics.data.repositories.ActionRepository
@@ -21,6 +22,10 @@ class ActionsViewModel(
     private val mActions = MutableLiveData<List<Action>>()
     val actions: LiveData<List<Action>>
         get() = mActions
+
+    private val mActionWithStoredItems = MutableLiveData<ActionWithStoredItems>()
+    val actionWithStoredItems: LiveData<ActionWithStoredItems>
+        get() = mActionWithStoredItems
 
     var selectedAction: Action? = null
 
@@ -47,6 +52,20 @@ class ActionsViewModel(
                 {
                     Log.e("actions-vm", "Failed to load actions $it")
                 })
+    }
+
+    fun getActionStoredItems(id: Long) {
+        compositeDisposable += actionRepository.getActionWithStoredItems(id)
+            .subscribeOn(Schedulers.computation())
+            .subscribe(
+                {
+                    mActionWithStoredItems.postValue(it)
+                },
+                {
+                    Log.e("actions-vm", "Failed to load action with stored items $it")
+                }
+            )
+
     }
 
     fun resetSaved() {
