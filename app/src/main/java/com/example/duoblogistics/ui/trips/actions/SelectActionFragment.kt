@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.duoblogistics.R
 import com.example.duoblogistics.data.db.entities.Action
+import com.example.duoblogistics.data.db.entities.Trip
 import com.example.duoblogistics.databinding.FragmentSelectActionBinding
 import com.example.duoblogistics.internal.data.ACTION_BRANCH_TO_CAR
 import com.example.duoblogistics.internal.data.ACTION_CAR_TO_BRANCH
@@ -39,6 +40,8 @@ class SelectActionFragment : Fragment(), KodeinAware {
 
     private val selectActionViewModel: SelectActionViewModel = SelectActionViewModel()
 
+    private lateinit var trip: Trip
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -47,14 +50,16 @@ class SelectActionFragment : Fragment(), KodeinAware {
                 .get(TripsViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
 
-        tripsViewModel.selectedTrip?.let {
-            tripsViewModel.getTripStoredItems(it.id)
-        }
-
         actionsViewModel = activity?.run {
             ViewModelProvider(this, actionsViewModelFactory)
                 .get(ActionsViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
+
+        tripsViewModel.selectedTrip?.let {
+            trip = it
+        }
+
+        tripsViewModel.getTripStoredItems(trip.id)
     }
 
     override fun onCreateView(
@@ -124,18 +129,68 @@ class SelectActionFragment : Fragment(), KodeinAware {
 //                }
 //            }
 //        }
-        binding.transferFromCarToCar.setOnClickListener {
-            tripsViewModel.selectedTrip?.apply {
+        binding.saveActionBtn.setOnClickListener {
+            selectActionViewModel.selectedAction.value?.let { action ->
                 tripsViewModel.storedItems.value?.filter { storedItem ->
                     storedItem.scanned
                 }?.let {
-                    actionsViewModel.saveActionWithStoredItems(
-                        Action(0, ACTION_CAR_TO_CAR, id),
-                        it
-                    )
+                    if (validate(action, it.size))
+                        actionsViewModel.saveActionWithStoredItems(
+                            Action(
+                                0,
+                                action,
+                                trip.id,
+                                selectActionViewModel.selectedTrip.value?.id,
+                                selectActionViewModel.selectedBranch.value?.id
+                            ),
+                            it
+                        )
+                }
+            }
+
+
+            selectActionViewModel.errorMessage.observe(viewLifecycleOwner, {
+                binding.selectActionErrorMsg.text = it
+            })
+//            tripsViewModel.selectedTrip?.apply {
+//                tripsViewModel.storedItems.value?.filter { storedItem ->
+//                    storedItem.scanned
+//                }?.let {
+//                    actionsViewModel.saveActionWithStoredItems(
+//                        Action(0, ACTION_CAR_TO_CAR, id),
+//                        it
+//                    )
+//                }
+//            }
+        }
+    }
+
+    private fun validate(action: String, storedItemsCount: Int): Boolean {
+        var valid = true
+
+        when (action) {
+            ACTION_CAR_TO_BRANCH -> {
+                if (selectActionViewModel.selectedBranch.value == null) {
+                    valid = false
+                    selectActionViewModel.setErrorMessage("Необходимо выбрать филиал")
+                }
+            }
+
+            ACTION_CAR_TO_CAR -> {
+                if (selectActionViewModel.selectedTrip.value == null) {
+                    valid = false
+                    selectActionViewModel.setErrorMessage("Необходимо выбрать рейс")
                 }
             }
         }
+
+        if(storedItemsCount < 1){
+            selectActionViewModel.setErrorMessage("Необходимо отсканировать хотя бы один товар")
+            valid = false
+        }
+
+
+        return valid
     }
 
     private fun initActionsSpinner(context: Context) {
@@ -166,7 +221,7 @@ class SelectActionFragment : Fragment(), KodeinAware {
                 R.layout.viewholder_textview,
                 R.id.genericViewHolderTv,
                 it.filter {
-                    it.id != tripsViewModel.selectedTrip?.id
+                    it.id != trip.id
                 }.map { it.code }.toMutableList()
             )
 
