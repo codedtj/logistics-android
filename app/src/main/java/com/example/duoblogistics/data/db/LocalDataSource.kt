@@ -2,10 +2,7 @@ package com.example.duoblogistics.data.db
 
 import com.example.duoblogistics.data.db.daos.TripDao
 import com.example.duoblogistics.data.db.entities.*
-import io.reactivex.Completable
-import io.reactivex.Flowable
-import io.reactivex.Maybe
-import io.reactivex.Single
+import io.reactivex.*
 import java.util.concurrent.Flow
 
 interface LocalDataSource {
@@ -32,4 +29,9 @@ interface LocalDataSource {
     fun getActionWithStoredItems(id:Long): Single<ActionWithStoredItems>
 
     fun getActions(): Single<List<Action>>
+
+    fun saveBranches(branches: List<Branch>): Single<List<Long>>
+
+    fun getBranches(): Observable<List<Branch>>
+
 }

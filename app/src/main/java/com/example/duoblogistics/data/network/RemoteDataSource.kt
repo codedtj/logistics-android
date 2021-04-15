@@ -1,5 +1,6 @@
 package com.example.duoblogistics.data.network
 
+import com.example.duoblogistics.data.db.entities.Branch
 import com.example.duoblogistics.data.db.entities.StoredItem
 import com.example.duoblogistics.data.db.entities.StoredItemWithInfo
 import com.example.duoblogistics.data.db.entities.Trip
@@ -11,11 +12,13 @@ import io.reactivex.Single
 interface RemoteDataSource {
     fun authorize(credentials: Credentials): Single<AuthenticationResponse>
 
-//    suspend fun getAuthorizedUser(): Result<AuthorizedUserResponse>
+    //    suspend fun getAuthorizedUser(): Result<AuthorizedUserResponse>
 //
     fun fetchTrips(): Flowable<List<Trip>>
 
-    fun fetchTripStoredItems(id:String) : Flowable<List<StoredItemWithInfo>>
+    fun fetchTripStoredItems(id: String): Flowable<List<StoredItemWithInfo>>
+
+    fun fetchBranches(): Flowable<List<Branch>>
 //
 //    suspend fun loadItem(tripId: String, itemCode: String)
 //

@@ -1,5 +1,6 @@
 package com.example.duoblogistics.data.network
 
+import com.example.duoblogistics.data.db.entities.Branch
 import com.example.duoblogistics.data.db.entities.StoredItem
 import com.example.duoblogistics.data.db.entities.StoredItemWithInfo
 import com.example.duoblogistics.data.db.entities.Trip
@@ -18,4 +19,6 @@ class RemoteDataSourceImpl(
 
     override fun fetchTripStoredItems(id: String): Flowable<List<StoredItemWithInfo>> =
         apiService.getTripStoredItems(id)
+
+    override fun fetchBranches(): Flowable<List<Branch>> = apiService.getBranches()
 }

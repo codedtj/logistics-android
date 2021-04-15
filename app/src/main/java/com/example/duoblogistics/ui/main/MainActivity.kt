@@ -3,6 +3,7 @@ package com.example.duoblogistics.ui.main
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -39,7 +40,8 @@ class MainActivity : AppCompatActivity(), KodeinAware {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_barcode_scanner
+                R.id.navigation_barcode_scanner,
+                R.id.navigation_to_actions_list
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -49,6 +51,8 @@ class MainActivity : AppCompatActivity(), KodeinAware {
 
         appViewModel = ViewModelProvider(this, appViewModelFactory)
             .get(AppViewModel::class.java)
+
+        appViewModel.getBranches()
     }
 
     private fun checkPermission() {

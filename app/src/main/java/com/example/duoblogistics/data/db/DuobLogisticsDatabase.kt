@@ -4,14 +4,18 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.duoblogistics.data.db.daos.ActionDao
-import com.example.duoblogistics.data.db.daos.StoredItemDao
-import com.example.duoblogistics.data.db.daos.StoredItemInfoDao
-import com.example.duoblogistics.data.db.daos.TripDao
+import com.example.duoblogistics.data.db.daos.*
 import com.example.duoblogistics.data.db.entities.*
 
 @Database(
-    entities = [Trip::class, StoredItem::class, StoredItemInfo::class, ActionWithStoredItem::class, Action::class],
+    entities = [
+        Trip::class,
+        StoredItem::class,
+        StoredItemInfo::class,
+        ActionWithStoredItem::class,
+        Action::class,
+        Branch::class
+    ],
     version = 1
 )
 abstract class DuobLogisticsDatabase : RoomDatabase() {
@@ -19,6 +23,7 @@ abstract class DuobLogisticsDatabase : RoomDatabase() {
     abstract fun storedItemDao(): StoredItemDao
     abstract fun storedItemInfoDao(): StoredItemInfoDao
     abstract fun actionDao(): ActionDao
+    abstract fun branchDao(): BranchDao
 
     companion object {
         @Volatile

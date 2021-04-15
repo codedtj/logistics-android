@@ -42,13 +42,14 @@ class CodedApplication : Application(), KodeinAware, ViewModelStoreOwner {
         bind() from singleton { instance<DuobLogisticsDatabase>().storedItemDao() }
         bind() from singleton { instance<DuobLogisticsDatabase>().storedItemInfoDao() }
         bind() from singleton { instance<DuobLogisticsDatabase>().actionDao() }
+        bind() from singleton { instance<DuobLogisticsDatabase>().branchDao() }
 
         //settings
         bind() from singleton { SharedSettings(instance()) }
 
         //view models
         bind() from provider { LoginViewModelFactory(instance()) }
-        bind() from provider { AppViewModelFactory() }
+        bind() from provider { AppViewModelFactory(instance(), instance()) }
         bind() from provider { TripsViewModelFactory(instance(), instance()) }
         bind() from provider { ActionsViewModelFactory(instance()) }
 
@@ -57,7 +58,7 @@ class CodedApplication : Application(), KodeinAware, ViewModelStoreOwner {
 
         //data source
         bind<RemoteDataSource>() with singleton { RemoteDataSourceImpl(instance()) }
-        bind<LocalDataSource>() with singleton { LocalDataSourceImpl(instance(), instance(), instance(), instance()) }
+        bind<LocalDataSource>() with singleton { LocalDataSourceImpl(instance(), instance(), instance(), instance(), instance()) }
 
         //repositories
         bind<AuthRepository>() with singleton { AuthRepositoryImpl(instance()) }
