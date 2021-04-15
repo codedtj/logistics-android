@@ -8,6 +8,9 @@ import androidx.databinding.BindingAdapter
 import com.example.duoblogistics.R
 import com.example.duoblogistics.data.db.entities.Action
 import com.example.duoblogistics.data.db.entities.StoredItem
+import com.example.duoblogistics.internal.data.ACTION_BRANCH_TO_CAR
+import com.example.duoblogistics.internal.data.ACTION_CAR_TO_BRANCH
+import com.example.duoblogistics.internal.data.ACTION_CAR_TO_CAR
 
 @BindingAdapter("bind:tripStatusText")
 fun setTripStatusText(view: TextView, status: String) {
@@ -30,9 +33,9 @@ fun setScannedStoredItemBackground(view: View, storedItem: StoredItem) {
 @BindingAdapter("bind:actionText")
 fun setActionText(view:TextView, action: Action){
     when(action.name){
-        "carToCar" ->  view.text = "C рейса на рейс"
-        "branchToCar" ->  view.text = "Со склада в машину"
-        "carToBranch" ->  view.text = "Из машины в склад"
+        ACTION_CAR_TO_CAR ->  view.text = "C рейса на рейс"
+        ACTION_BRANCH_TO_CAR ->  view.text = "Со склада в машину"
+        ACTION_CAR_TO_BRANCH ->  view.text = "Из машины в склад"
         else -> view.text ="НЛО"
     }
 }

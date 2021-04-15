@@ -16,18 +16,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/loadToCarBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Загрузить из склада в машину" />
+<!--        <Button-->
+<!--            android:id="@+id/loadToCarBtn"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Загрузить из склада в машину" />-->
 
-        <Button
-            android:id="@+id/unloadCarBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Выгрузить из машины на склад" />
+<!--        <Button-->
+<!--            android:id="@+id/unloadCarBtn"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:text="Выгрузить из машины на склад" />-->
+
+        <Spinner
+            android:id="@+id/tripsSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/transferFromCarToCar"
@@ -35,6 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="C рейса на рейс" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
