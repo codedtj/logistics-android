@@ -2,6 +2,7 @@ package com.example.duoblogistics.data.repositories
 
 import com.example.duoblogistics.data.db.LocalDataSource
 import com.example.duoblogistics.data.db.entities.Action
+import com.example.duoblogistics.data.db.entities.ActionWithEverything
 import com.example.duoblogistics.data.db.entities.ActionWithStoredItems
 import com.example.duoblogistics.data.db.entities.StoredItem
 import io.reactivex.Single
@@ -12,6 +13,10 @@ class ActionRepositoryImpl(
     override fun getActionWithStoredItems(actionId: Long): Single<ActionWithStoredItems> {
         return localDataSource.getActionWithStoredItems(actionId)
     }
+
+//    override fun getActionWithEverything(actionId: Long): Single<ActionWithEverything> {
+//        return localDataSource.getActionWithEverything(actionId)
+//    }
 
     override fun saveActionWithStoredItems(
         action: Action,

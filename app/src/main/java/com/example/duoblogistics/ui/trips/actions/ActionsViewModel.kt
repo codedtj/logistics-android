@@ -3,10 +3,7 @@ package com.example.duoblogistics.ui.trips.actions
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.duoblogistics.data.db.entities.Action
-import com.example.duoblogistics.data.db.entities.ActionWithStoredItems
-import com.example.duoblogistics.data.db.entities.StoredItem
-import com.example.duoblogistics.data.db.entities.Trip
+import com.example.duoblogistics.data.db.entities.*
 import com.example.duoblogistics.data.repositories.ActionRepository
 import com.example.duoblogistics.internal.base.BaseViewModel
 import com.example.duoblogistics.internal.extensions.plusAssign
@@ -23,9 +20,9 @@ class ActionsViewModel(
     val actions: LiveData<List<Action>>
         get() = mActions
 
-    private val mActionWithStoredItems = MutableLiveData<ActionWithStoredItems>()
-    val actionWithStoredItems: LiveData<ActionWithStoredItems>
-        get() = mActionWithStoredItems
+    private val mActionWithEverything = MutableLiveData<ActionWithEverything>()
+    val actionWithEverything: LiveData<ActionWithEverything>
+        get() = mActionWithEverything
 
     var selectedAction: Action? = null
 
@@ -54,18 +51,20 @@ class ActionsViewModel(
                 })
     }
 
-    fun getActionStoredItems(id: Long) {
-        compositeDisposable += actionRepository.getActionWithStoredItems(id)
-            .subscribeOn(Schedulers.computation())
-            .subscribe(
-                {
-                    mActionWithStoredItems.postValue(it)
-                },
-                {
-                    Log.e("actions-vm", "Failed to load action with stored items $it")
-                }
-            )
 
+
+    fun getActionWithEverything(id: Long){
+//        compositeDisposable += actionRepository.getActionWithEverything(id)
+//            .subscribeOn(Schedulers.computation())
+//            .subscribe(
+//                {
+//                    Log.d("actions-vm", "Action loaded $it")
+//                    mActionWithEverything.postValue(it)
+//                },
+//                {
+//                    Log.e("actions-vm", "Failed to load action with everything $it")
+//                }
+//            )
     }
 
     fun resetSaved() {

@@ -2,6 +2,7 @@ package com.example.duoblogistics.data.db.daos
 
 import androidx.room.*
 import com.example.duoblogistics.data.db.entities.Action
+import com.example.duoblogistics.data.db.entities.ActionWithEverything
 import com.example.duoblogistics.data.db.entities.ActionWithStoredItem
 import com.example.duoblogistics.data.db.entities.ActionWithStoredItems
 import io.reactivex.Flowable

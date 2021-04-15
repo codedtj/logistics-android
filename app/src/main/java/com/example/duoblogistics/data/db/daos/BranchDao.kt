@@ -15,4 +15,7 @@ interface BranchDao {
 
     @Query("SELECT * FROM branches")
     fun getBranches(): Single<List<Branch>>
+
+    @Query("SELECT * FROM branches WHERE id=:id")
+    fun getBranch(id:String):Single<Branch>
 }

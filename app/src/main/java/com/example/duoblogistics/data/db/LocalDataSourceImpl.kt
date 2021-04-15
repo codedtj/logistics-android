@@ -13,6 +13,10 @@ class LocalDataSourceImpl(
 ) : LocalDataSource {
     override fun getTrips(): Flowable<List<Trip>> = tripDao.getTrips()
 
+    override fun getTrip(id:String): Single<Trip> {
+        return  tripDao.getTrip(id)
+    }
+
     override fun saveTrips(trips: List<Trip>): Single<List<Long>> {
         return tripDao.deleteTripsWhereNotIn(trips.map { it.id }).andThen(tripDao.insert(trips))
     }
@@ -44,16 +48,19 @@ class LocalDataSourceImpl(
         ActionWithStoredItem(actionId, it.id)
     })
 
-    override fun getActionWithStoredItems(id:Long): Single<ActionWithStoredItems> =
+    override fun getActionWithStoredItems(id: Long): Single<ActionWithStoredItems> =
         actionDao.getActionWithStoredItems(id)
+
 
     override fun getActions(): Single<List<Action>> = actionDao.getActions()
 
-    override fun saveBranches(branches: List<Branch>): Single<List<Long>>{
+    override fun saveBranches(branches: List<Branch>): Single<List<Long>> {
         return branchDao.insert(branches)
     }
 
     override fun getBranches(): Single<List<Branch>> {
         return branchDao.getBranches()
     }
+
+    override fun getBranch(id:String):Single<Branch> = branchDao.getBranch(id)
 }

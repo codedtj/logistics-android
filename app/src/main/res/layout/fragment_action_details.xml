@@ -6,11 +6,41 @@
     tools:context=".ui.trips.actions.details.ActionDetailsFragment"
     android:orientation="vertical">
     <TextView
+        android:id="@+id/actionNameTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:textSize="20sp">
+    </TextView>
+
+    <TextView
         android:id="@+id/actionStatusTv"
         android:layout_width="match_parent"
         android:textSize="20sp"
-        android:layout_margin="20dp"
+        android:layout_margin="10dp"
         android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/actionTripTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_margin="10dp"/>
+
+    <TextView
+        android:id="@+id/actionTripToTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_margin="10dp"/>
+
+    <TextView
+        android:id="@+id/actionBranchTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_margin="10dp"
+        android:visibility="gone"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/actionStoredItemsRv"

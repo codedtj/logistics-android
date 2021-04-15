@@ -14,9 +14,12 @@ interface TripDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(trips: List<Trip>): Single<List<Long>>
 
-    @Query("SELECT * from trips")
+    @Query("SELECT * FROM trips")
     fun getTrips(): Flowable<List<Trip>>
 
-    @Query("DELETE from trips WHERE id NOT IN (:trips)")
+    @Query("SELECT * FROM trips WHERE id=:id")
+    fun getTrip(id:String): Single<Trip>
+
+    @Query("DELETE FROM trips WHERE id NOT IN (:trips)")
     fun deleteTripsWhereNotIn(trips: List<String>): Completable
 }

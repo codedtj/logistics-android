@@ -8,6 +8,8 @@ import java.util.concurrent.Flow
 interface LocalDataSource {
     fun getTrips(): Flowable<List<Trip>>
 
+    fun getTrip(id:String): Single<Trip>
+
     fun saveTrips(trips: List<Trip>): Single<List<Long>>
 
     fun getTripStoredItems(id: String): Flowable<List<StoredItem>>
@@ -18,20 +20,22 @@ interface LocalDataSource {
 
     fun getStoredItemInfo(id: String): Maybe<StoredItemInfo>
 
-    fun updateStoredItem(storedItem:StoredItem):Completable
+    fun updateStoredItem(storedItem: StoredItem): Completable
 
     fun getStoredItemsById(ids: List<String>): Single<List<StoredItem>>
 
     fun saveAction(action: Action): Single<Long>
 
-    fun saveActionStoredItems(actionId:Long, storedItems: List<StoredItem>): Single<List<Long>>
+    fun saveActionStoredItems(actionId: Long, storedItems: List<StoredItem>): Single<List<Long>>
 
-    fun getActionWithStoredItems(id:Long): Single<ActionWithStoredItems>
+    fun getActionWithStoredItems(id: Long): Single<ActionWithStoredItems>
 
     fun getActions(): Single<List<Action>>
 
     fun saveBranches(branches: List<Branch>): Single<List<Long>>
 
     fun getBranches(): Single<List<Branch>>
+
+    fun getBranch(id:String):Single<Branch>
 
 }

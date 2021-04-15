@@ -16,6 +16,7 @@ import com.example.duoblogistics.ui.main.AppViewModelFactory
 import com.example.duoblogistics.ui.trips.TripsViewModelFactory
 import com.example.duoblogistics.ui.trips.actions.ActionsViewModelFactory
 import com.example.duoblogistics.ui.trips.actions.SelectActionViewModelFactory
+import com.example.duoblogistics.ui.trips.actions.details.ActionDetailViewModelFactory
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
@@ -54,6 +55,7 @@ class CodedApplication : Application(), KodeinAware, ViewModelStoreOwner {
         bind() from provider { TripsViewModelFactory(instance(), instance()) }
         bind() from provider { ActionsViewModelFactory(instance()) }
         bind() from provider { SelectActionViewModelFactory(instance()) }
+        bind() from provider { ActionDetailViewModelFactory(instance(), instance()) }
 
         //services
         bind() from singleton { LogisticApiService(instance()) }

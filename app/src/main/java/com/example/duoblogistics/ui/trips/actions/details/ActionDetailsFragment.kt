@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.duoblogistics.R
 import com.example.duoblogistics.databinding.FragmentActionDetailsBinding
+import com.example.duoblogistics.internal.data.ACTION_BRANCH_TO_CAR
+import com.example.duoblogistics.internal.data.ACTION_CAR_TO_BRANCH
+import com.example.duoblogistics.internal.data.ACTION_CAR_TO_CAR
 import com.example.duoblogistics.ui.trips.TripsViewModel
 import com.example.duoblogistics.ui.trips.TripsViewModelFactory
 import com.example.duoblogistics.ui.trips.actions.ActionsViewModel
@@ -36,7 +39,11 @@ class ActionDetailsFragment : Fragment(), KodeinAware {
 
     private val tripsViewModelFactory: TripsViewModelFactory by instance()
 
-    private lateinit var binding: FragmentActionDetailsBinding;
+    private lateinit var actionDetailViewModel: ActionDetailViewModel
+
+    private val actionDetailViewModelFactory: ActionDetailViewModelFactory by instance()
+
+    private lateinit var binding: FragmentActionDetailsBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,10 +62,15 @@ class ActionDetailsFragment : Fragment(), KodeinAware {
                 .get(ActionsViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
 
-
         tripsViewModel = activity?.run {
             ViewModelProvider(this, tripsViewModelFactory)
                 .get(TripsViewModel::class.java)
+        } ?: throw Exception("Invalid Activity")
+
+
+        actionDetailViewModel = activity?.run {
+            ViewModelProvider(this, actionDetailViewModelFactory)
+                .get(ActionDetailViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
 
         val adapter = StoredItemsAdapter(this, tripsViewModel)
@@ -70,19 +82,48 @@ class ActionDetailsFragment : Fragment(), KodeinAware {
         )
 
         binding.actionStoredItemsRv.addItemDecoration(divider)
-        binding.actionStoredItemsRv.itemAnimator  = null
+        binding.actionStoredItemsRv.itemAnimator = null
 
-        actionsViewModel.actionWithStoredItems.observe(viewLifecycleOwner, {
+        actionDetailViewModel.actionWithStoredItems.observe(viewLifecycleOwner, {
+            setVisibility(it.action.name)
             when (it.action.status) {
                 "pending" -> binding.actionStatusTv.text = "Ожидает отправки"
                 "completed" -> binding.actionStatusTv.text = "Отправлено"
             }
-            Log.d("action-df", "$it")
+
+            when(it.action.name){
+                ACTION_CAR_TO_CAR ->  binding.actionNameTv.text = "C рейса на рейс"
+                ACTION_BRANCH_TO_CAR ->  binding.actionNameTv.text = "Со склада в машину"
+                ACTION_CAR_TO_BRANCH ->  binding.actionNameTv.text = "Из машины в склад"
+                else -> binding.actionNameTv.text ="НЛО"
+            }
+
             adapter.submitList(it.storedItems.toMutableList())
         })
 
         actionsViewModel.selectedAction?.apply {
-            actionsViewModel.getActionStoredItems(id)
+            actionDetailViewModel.getActionStoredItems(id)
+        }
+
+        actionDetailViewModel.trip.observe(viewLifecycleOwner, {
+            binding.actionTripTv.text = "Рейс: " + it.code
+        })
+
+        actionDetailViewModel.tripTo.observe(viewLifecycleOwner, {
+            binding.actionTripToTv.text = "На рейс: " + it.code
+        })
+
+        actionDetailViewModel.branch.observe(viewLifecycleOwner, {
+            binding.actionBranchTv.text = "На склад: " + it.name
+        })
+    }
+
+    private fun setVisibility(action: String) {
+        binding.actionBranchTv.visibility = View.GONE
+        binding.actionTripToTv.visibility = View.GONE
+        when (action) {
+            ACTION_CAR_TO_CAR -> binding.actionTripToTv.visibility = View.VISIBLE
+            ACTION_CAR_TO_BRANCH ->  binding.actionBranchTv.visibility = View.VISIBLE
         }
     }
 }
