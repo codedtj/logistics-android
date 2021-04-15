@@ -80,7 +80,9 @@ class SelectActionFragment : Fragment(), KodeinAware {
                     context,
                     R.layout.viewholder_textview,
                     R.id.genericViewHolderTv,
-                    it.map { it.code }.toMutableList()
+                    it.filter{
+                        it.id != tripsViewModel.selectedTrip?.id
+                    }.map { it.code }.toMutableList()
                 )
 
                 binding.tripsSpinner.onItemSelectedListener =
