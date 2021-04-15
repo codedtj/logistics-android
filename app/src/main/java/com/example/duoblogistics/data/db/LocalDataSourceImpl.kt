@@ -53,7 +53,7 @@ class LocalDataSourceImpl(
         return branchDao.insert(branches)
     }
 
-    override fun getBranches(): Observable<List<Branch>> {
+    override fun getBranches(): Single<List<Branch>> {
         return branchDao.getBranches()
     }
 }

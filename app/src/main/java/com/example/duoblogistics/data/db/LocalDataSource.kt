@@ -32,6 +32,6 @@ interface LocalDataSource {
 
     fun saveBranches(branches: List<Branch>): Single<List<Long>>
 
-    fun getBranches(): Observable<List<Branch>>
+    fun getBranches(): Single<List<Branch>>
 
 }

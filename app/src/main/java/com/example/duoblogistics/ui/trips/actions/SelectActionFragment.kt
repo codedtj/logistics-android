@@ -1,19 +1,18 @@
 package com.example.duoblogistics.ui.trips.actions
 
 import android.content.Context
-import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.duoblogistics.R
 import com.example.duoblogistics.data.db.entities.Action
+import com.example.duoblogistics.data.db.entities.Branch
 import com.example.duoblogistics.data.db.entities.Trip
 import com.example.duoblogistics.databinding.FragmentSelectActionBinding
 import com.example.duoblogistics.internal.data.ACTION_BRANCH_TO_CAR
@@ -38,7 +37,9 @@ class SelectActionFragment : Fragment(), KodeinAware {
 
     private val actionsViewModelFactory: ActionsViewModelFactory by instance()
 
-    private val selectActionViewModel: SelectActionViewModel = SelectActionViewModel()
+    private lateinit var selectActionViewModel: SelectActionViewModel;
+
+    private val selectActionViewModelFactory: SelectActionViewModelFactory by instance()
 
     private lateinit var trip: Trip
 
@@ -55,11 +56,18 @@ class SelectActionFragment : Fragment(), KodeinAware {
                 .get(ActionsViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
 
+        selectActionViewModel = activity?.run {
+            ViewModelProvider(this, selectActionViewModelFactory)
+                .get(SelectActionViewModel::class.java)
+        } ?: throw Exception("Invalid Activity")
+
         tripsViewModel.selectedTrip?.let {
             trip = it
         }
 
         tripsViewModel.getTripStoredItems(trip.id)
+
+        selectActionViewModel.getBranches()
     }
 
     override fun onCreateView(
@@ -99,9 +107,24 @@ class SelectActionFragment : Fragment(), KodeinAware {
             }
         })
 
+        selectActionViewModel.branches.observe(viewLifecycleOwner, {
+            this.context?.let { context ->
+                initBranchesSpinner(context, it)
+            }
+        })
+
+        tripsViewModel.trips.observe(viewLifecycleOwner, { trips ->
+            this.context?.let { context ->
+                initTripsSpinner(context,
+                    trips.filter {
+                        it.id != trip.id
+                    }
+                )
+            }
+        })
+
         this.context?.let { context ->
             initActionsSpinner(context)
-            initTripsSpinner(context)
         }
 
 
@@ -184,7 +207,7 @@ class SelectActionFragment : Fragment(), KodeinAware {
             }
         }
 
-        if(storedItemsCount < 1){
+        if (storedItemsCount < 1) {
             selectActionViewModel.setErrorMessage("Необходимо отсканировать хотя бы один товар")
             valid = false
         }
@@ -214,19 +237,29 @@ class SelectActionFragment : Fragment(), KodeinAware {
             )
     }
 
-    private fun initTripsSpinner(context: Context) {
-        tripsViewModel.trips.value?.let {
-            binding.tripsSpinner.adapter = ArrayAdapter(
-                context,
-                R.layout.viewholder_textview,
-                R.id.genericViewHolderTv,
-                it.filter {
-                    it.id != trip.id
-                }.map { it.code }.toMutableList()
-            )
+    private fun initTripsSpinner(context: Context, trips: List<Trip>) {
+        binding.tripsSpinner.adapter = ArrayAdapter(
+            context,
+            R.layout.viewholder_textview,
+            R.id.genericViewHolderTv,
+            trips.map { it.code }
+        )
 
-            binding.tripsSpinner.onItemSelectedListener =
-                TripSpinnerOnClickListener(selectActionViewModel, it)
-        }
+        binding.tripsSpinner.onItemSelectedListener =
+            TripSpinnerOnClickListener(selectActionViewModel, trips)
+    }
+
+    private fun initBranchesSpinner(context: Context, branches: List<Branch>) {
+//        val branches = selectActionViewModel.branches.value ?: emptyList()
+        Log.d("bbbb", branches.toString())
+        binding.branchesSpinner.adapter = ArrayAdapter(
+            context,
+            R.layout.viewholder_textview,
+            R.id.genericViewHolderTv,
+            branches.map { it.name }
+        )
+
+        binding.tripsSpinner.onItemSelectedListener =
+            BranchSpinnerOnSelectedListener(selectActionViewModel, branches)
     }
 }

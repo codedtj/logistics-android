@@ -15,6 +15,7 @@ import com.example.duoblogistics.ui.auth.LoginViewModelFactory
 import com.example.duoblogistics.ui.main.AppViewModelFactory
 import com.example.duoblogistics.ui.trips.TripsViewModelFactory
 import com.example.duoblogistics.ui.trips.actions.ActionsViewModelFactory
+import com.example.duoblogistics.ui.trips.actions.SelectActionViewModelFactory
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
@@ -52,13 +53,22 @@ class CodedApplication : Application(), KodeinAware, ViewModelStoreOwner {
         bind() from provider { AppViewModelFactory(instance(), instance()) }
         bind() from provider { TripsViewModelFactory(instance(), instance()) }
         bind() from provider { ActionsViewModelFactory(instance()) }
+        bind() from provider { SelectActionViewModelFactory(instance()) }
 
         //services
         bind() from singleton { LogisticApiService(instance()) }
 
         //data source
         bind<RemoteDataSource>() with singleton { RemoteDataSourceImpl(instance()) }
-        bind<LocalDataSource>() with singleton { LocalDataSourceImpl(instance(), instance(), instance(), instance(), instance()) }
+        bind<LocalDataSource>() with singleton {
+            LocalDataSourceImpl(
+                instance(),
+                instance(),
+                instance(),
+                instance(),
+                instance()
+            )
+        }
 
         //repositories
         bind<AuthRepository>() with singleton { AuthRepositoryImpl(instance()) }

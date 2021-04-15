@@ -14,5 +14,5 @@ interface BranchDao {
     fun insert(branches: List<Branch>): Single<List<Long>>
 
     @Query("SELECT * FROM branches")
-    fun getBranches(): Observable<List<Branch>>
+    fun getBranches(): Single<List<Branch>>
 }
