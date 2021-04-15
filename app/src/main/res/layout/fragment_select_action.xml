@@ -16,42 +16,83 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-<!--        <Button-->
-<!--            android:id="@+id/loadToCarBtn"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Загрузить из склада в машину" />-->
+        <!--        <Button-->
+        <!--            android:id="@+id/loadToCarBtn"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="Загрузить из склада в машину" />-->
 
-<!--        <Button-->
-<!--            android:id="@+id/unloadCarBtn"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            android:text="Выгрузить из машины на склад" />-->
-
-        <Spinner
-            android:id="@+id/actionsSpinner"
+        <!--        <Button-->
+        <!--            android:id="@+id/unloadCarBtn"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="10dp"-->
+        <!--            android:text="Выгрузить из машины на склад" />-->
+        <LinearLayout
+            android:id="@+id/actionsSpinnerLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <Spinner
-            android:visibility="invisible"
-            android:id="@+id/tripsSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <TextView
+                android:textSize="18sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/title_action" />
 
-        <Spinner
-            android:visibility="invisible"
-            android:id="@+id/branchesSpinner"
+            <Spinner
+                android:id="@+id/actionsSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:id="@+id/tripsSpinnerLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:textSize="18sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/title_trip" />
+
+            <Spinner
+                android:id="@+id/tripsSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:id="@+id/branchesSpinnerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:textSize="18sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/title_branch" />
+
+            <Spinner
+                android:id="@+id/branchesSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
 
         <Button
-            android:id="@+id/transferFromCarToCar"
+            android:id="@+id/saveActionBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="C рейса на рейс" />
+            android:text="@string/title_save" />
 
     </LinearLayout>
 

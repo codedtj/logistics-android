@@ -88,5 +88,8 @@
     <string name="trip_status_active">в пути</string>
     <string name="trip_status_scheduled">запланирован</string>
     <string name="title_actions">Операции</string>
+    <string name="title_action">Операция</string>
+    <string name="title_branch">Филиал</string>
+    <string name="title_save">Сохранить</string>
 
 </resources>

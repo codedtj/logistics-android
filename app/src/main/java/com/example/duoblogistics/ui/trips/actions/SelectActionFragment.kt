@@ -80,16 +80,16 @@ class SelectActionFragment : Fragment(), KodeinAware {
         selectActionViewModel.selectedAction.observe(viewLifecycleOwner, {
             when (it) {
                 ACTION_BRANCH_TO_CAR -> {
-                    binding.tripsSpinner.visibility = View.INVISIBLE
-                    binding.branchesSpinner.visibility = View.INVISIBLE
+                    binding.tripsSpinnerLayout.visibility = View.GONE
+                    binding.branchesSpinnerLayout.visibility = View.GONE
                 }
                 ACTION_CAR_TO_BRANCH -> {
-                    binding.tripsSpinner.visibility = View.INVISIBLE
-                    binding.branchesSpinner.visibility = View.VISIBLE
+                    binding.tripsSpinnerLayout.visibility = View.GONE
+                    binding.branchesSpinnerLayout.visibility = View.VISIBLE
                 }
                 ACTION_CAR_TO_CAR -> {
-                    binding.tripsSpinner.visibility = View.VISIBLE
-                    binding.branchesSpinner.visibility = View.INVISIBLE
+                    binding.tripsSpinnerLayout.visibility = View.VISIBLE
+                    binding.branchesSpinnerLayout.visibility = View.GONE
                 }
             }
         })
