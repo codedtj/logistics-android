@@ -259,7 +259,7 @@ class SelectActionFragment : Fragment(), KodeinAware {
             branches.map { it.name }
         )
 
-        binding.tripsSpinner.onItemSelectedListener =
+        binding.branchesSpinner.onItemSelectedListener =
             BranchSpinnerOnSelectedListener(selectActionViewModel, branches)
     }
 }
