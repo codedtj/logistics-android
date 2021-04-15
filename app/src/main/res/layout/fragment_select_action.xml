@@ -30,7 +30,19 @@
 <!--            android:text="Выгрузить из машины на склад" />-->
 
         <Spinner
+            android:id="@+id/actionsSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Spinner
+            android:visibility="invisible"
             android:id="@+id/tripsSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Spinner
+            android:visibility="invisible"
+            android:id="@+id/branchesSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

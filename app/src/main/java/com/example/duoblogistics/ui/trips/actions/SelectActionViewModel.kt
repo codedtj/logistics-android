@@ -10,7 +10,15 @@ class SelectActionViewModel: ViewModel() {
     val selectedTrip: LiveData<Trip>
         get() = mSelectedTrip
 
+    private val mSelectedAction = MutableLiveData<String>()
+    val selectedAction: LiveData<String>
+        get() = mSelectedAction
+
     fun setSelectedTrip(trip:Trip){
         mSelectedTrip.postValue(trip)
+    }
+
+    fun setSelectedAction(action: String){
+        mSelectedAction.postValue(action)
     }
 }

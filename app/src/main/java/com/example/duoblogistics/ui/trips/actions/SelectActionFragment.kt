@@ -1,5 +1,7 @@
 package com.example.duoblogistics.ui.trips.actions
 
+import android.content.Context
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -13,6 +15,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.duoblogistics.R
 import com.example.duoblogistics.data.db.entities.Action
 import com.example.duoblogistics.databinding.FragmentSelectActionBinding
+import com.example.duoblogistics.internal.data.ACTION_BRANCH_TO_CAR
+import com.example.duoblogistics.internal.data.ACTION_CAR_TO_BRANCH
 import com.example.duoblogistics.internal.data.ACTION_CAR_TO_CAR
 import com.example.duoblogistics.ui.trips.TripsViewModel
 import com.example.duoblogistics.ui.trips.TripsViewModelFactory
@@ -73,21 +77,26 @@ class SelectActionFragment : Fragment(), KodeinAware {
             }
         })
 
+        selectActionViewModel.selectedAction.observe(viewLifecycleOwner, {
+            when (it) {
+                ACTION_BRANCH_TO_CAR -> {
+                    binding.tripsSpinner.visibility = View.INVISIBLE
+                    binding.branchesSpinner.visibility = View.INVISIBLE
+                }
+                ACTION_CAR_TO_BRANCH -> {
+                    binding.tripsSpinner.visibility = View.INVISIBLE
+                    binding.branchesSpinner.visibility = View.VISIBLE
+                }
+                ACTION_CAR_TO_CAR -> {
+                    binding.tripsSpinner.visibility = View.VISIBLE
+                    binding.branchesSpinner.visibility = View.INVISIBLE
+                }
+            }
+        })
 
         this.context?.let { context ->
-            tripsViewModel.trips.value?.let {
-                binding.tripsSpinner.adapter = ArrayAdapter(
-                    context,
-                    R.layout.viewholder_textview,
-                    R.id.genericViewHolderTv,
-                    it.filter{
-                        it.id != tripsViewModel.selectedTrip?.id
-                    }.map { it.code }.toMutableList()
-                )
-
-                binding.tripsSpinner.onItemSelectedListener =
-                    TripSpinnerOnClickListener(selectActionViewModel, it)
-            }
+            initActionsSpinner(context)
+            initTripsSpinner(context)
         }
 
 
@@ -126,6 +135,43 @@ class SelectActionFragment : Fragment(), KodeinAware {
                     )
                 }
             }
+        }
+    }
+
+    private fun initActionsSpinner(context: Context) {
+
+        val actionsList =
+            listOf("Загрузить в машину", "Выгрузить из машины", "Из машины в машину")
+        Log.d("elele", actionsList.toString())
+
+        binding.actionsSpinner.adapter = ArrayAdapter(
+            context,
+            R.layout.viewholder_textview,
+            R.id.genericViewHolderTv,
+            actionsList
+        )
+
+        binding.actionsSpinner.onItemSelectedListener =
+            ActionSpinnerOnSelectedListener(
+                selectActionViewModel, listOf(
+                    ACTION_BRANCH_TO_CAR, ACTION_CAR_TO_BRANCH, ACTION_CAR_TO_CAR
+                )
+            )
+    }
+
+    private fun initTripsSpinner(context: Context) {
+        tripsViewModel.trips.value?.let {
+            binding.tripsSpinner.adapter = ArrayAdapter(
+                context,
+                R.layout.viewholder_textview,
+                R.id.genericViewHolderTv,
+                it.filter {
+                    it.id != tripsViewModel.selectedTrip?.id
+                }.map { it.code }.toMutableList()
+            )
+
+            binding.tripsSpinner.onItemSelectedListener =
+                TripSpinnerOnClickListener(selectActionViewModel, it)
         }
     }
 }
