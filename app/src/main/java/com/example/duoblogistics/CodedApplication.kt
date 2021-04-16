@@ -1,4 +1,4 @@
-package com.example.duoblogistics
+  package com.example.duoblogistics
 
 import android.app.Application
 import androidx.lifecycle.ViewModelStore
@@ -58,7 +58,7 @@ class CodedApplication : Application(), KodeinAware, ViewModelStoreOwner {
         bind() from provider { ActionDetailViewModelFactory(instance(), instance()) }
 
         //services
-        bind() from singleton { LogisticApiService(instance()) }
+        bind() from singleton { LogisticApiService(instance(), this@CodedApplication) }
 
         //data source
         bind<RemoteDataSource>() with singleton { RemoteDataSourceImpl(instance()) }

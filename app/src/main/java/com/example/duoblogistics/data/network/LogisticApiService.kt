@@ -1,9 +1,11 @@
 package com.example.duoblogistics.data.network
 
+import android.content.Context
 import com.example.duoblogistics.data.db.entities.Branch
 import com.example.duoblogistics.data.db.entities.StoredItem
 import com.example.duoblogistics.data.db.entities.StoredItemWithInfo
 import com.example.duoblogistics.data.db.entities.Trip
+import com.example.duoblogistics.data.network.interceptors.AcceptJsonHeaderToRequestInterceptor
 import com.example.duoblogistics.data.network.interceptors.RequestTokenInterceptor
 import com.example.duoblogistics.data.network.interceptors.ResponseCodeInterceptor
 import com.example.duoblogistics.data.network.models.AuthenticationResponse
@@ -31,7 +33,7 @@ interface LogisticApiService {
     fun getTripStoredItems(@Path("id") tripId: String): Flowable<List<StoredItemWithInfo>>
 
     @GET("branches")
-    fun getBranches() : Flowable<List<Branch>>
+    fun getBranches(): Flowable<List<Branch>>
 
 /*    @GET("user")
     suspend fun getAuthorizedUser(): Response<AuthorizedUserResponse>
@@ -63,12 +65,15 @@ interface LogisticApiService {
     ): Response<StoredItem>*/
 
     companion object {
-        operator fun invoke(settings: SharedSettings
+        operator fun invoke(
+            settings: SharedSettings,
+            context: Context
         ): LogisticApiService {
 
             val httpClient = OkHttpClient.Builder()
                 .addInterceptor(RequestTokenInterceptor(settings))
-                .addInterceptor(ResponseCodeInterceptor())
+                .addInterceptor(ResponseCodeInterceptor(context))
+                .addInterceptor(AcceptJsonHeaderToRequestInterceptor())
 
             val client = httpClient.build()
             val retrofit = Retrofit.Builder()
