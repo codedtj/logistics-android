@@ -87,7 +87,7 @@ class TripsViewModel(
             .subscribe(
                 {
                     Log.d("trips-view-model", "Loaded trip stored items $it")
-                    if (it.firstOrNull()?.trip_id == selectedTrip?.id)
+//                    if (it.firstOrNull()?.trip_id == selectedTrip?.id)
                         mStoredItems.postValue(it)
                 },
                 {
@@ -96,9 +96,10 @@ class TripsViewModel(
             )
     }
 
-    fun clearTripStoredItems() {
-        this.mStoredItems.postValue(emptyList())
-    }
+//    fun clearTripStoredItems() {
+//        Log.d("trips-view-model", "Clear trip stored items list")
+//        this.mStoredItems.postValue(emptyList())
+//    }
 
     fun getStoredItemInfo(id: String) {
         compositeDisposable += tripsRepository.getStoredItemInfo(id)

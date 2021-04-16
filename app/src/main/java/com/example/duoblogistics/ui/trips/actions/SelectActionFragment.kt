@@ -127,31 +127,6 @@ class SelectActionFragment : Fragment(), KodeinAware {
             initActionsSpinner(context)
         }
 
-
-//        binding.loadToCarBtn.setOnClickListener {
-//            tripsViewModel.selectedTrip?.apply {
-//                tripsViewModel.storedItems.value?.filter { storedItem ->
-//                    storedItem.scanned
-//                }?.let {
-//                    actionsViewModel.saveActionWithStoredItems(
-//                        Action(0, ACTION_BRANCH_TO_CAR, id),
-//                        it
-//                    )
-//                }
-//            }
-//        }
-//        binding.unloadCarBtn.setOnClickListener {
-//            tripsViewModel.selectedTrip?.apply {
-//                tripsViewModel.storedItems.value?.filter { storedItem ->
-//                    storedItem.scanned
-//                }?.let {
-//                    actionsViewModel.saveActionWithStoredItems(
-//                        Action(0, ACTION_CAR_TO_BRANCH, id),
-//                        it
-//                    )
-//                }
-//            }
-//        }
         binding.saveActionBtn.setOnClickListener {
             selectActionViewModel.selectedAction.value?.let { action ->
                 tripsViewModel.storedItems.value?.filter { storedItem ->
@@ -175,16 +150,6 @@ class SelectActionFragment : Fragment(), KodeinAware {
             selectActionViewModel.errorMessage.observe(viewLifecycleOwner, {
                 binding.selectActionErrorMsg.text = it
             })
-//            tripsViewModel.selectedTrip?.apply {
-//                tripsViewModel.storedItems.value?.filter { storedItem ->
-//                    storedItem.scanned
-//                }?.let {
-//                    actionsViewModel.saveActionWithStoredItems(
-//                        Action(0, ACTION_CAR_TO_CAR, id),
-//                        it
-//                    )
-//                }
-//            }
         }
     }
 
@@ -250,8 +215,6 @@ class SelectActionFragment : Fragment(), KodeinAware {
     }
 
     private fun initBranchesSpinner(context: Context, branches: List<Branch>) {
-//        val branches = selectActionViewModel.branches.value ?: emptyList()
-        Log.d("bbbb", branches.toString())
         binding.branchesSpinner.adapter = ArrayAdapter(
             context,
             R.layout.viewholder_textview,
