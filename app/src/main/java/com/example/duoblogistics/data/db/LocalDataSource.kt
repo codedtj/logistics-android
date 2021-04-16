@@ -38,4 +38,6 @@ interface LocalDataSource {
 
     fun getBranch(id:String):Single<Branch>
 
+    fun getPendingAction(): Single<List<ActionWithStoredItems>>
+
 }

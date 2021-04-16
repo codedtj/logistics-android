@@ -8,9 +8,12 @@ import com.example.duoblogistics.data.db.entities.Trip
 import com.example.duoblogistics.data.network.interceptors.AcceptJsonHeaderToRequestInterceptor
 import com.example.duoblogistics.data.network.interceptors.RequestTokenInterceptor
 import com.example.duoblogistics.data.network.interceptors.ResponseCodeInterceptor
+import com.example.duoblogistics.data.network.models.ActionWithItemsList
 import com.example.duoblogistics.data.network.models.AuthenticationResponse
 import com.example.duoblogistics.data.network.models.Credentials
+import com.example.duoblogistics.data.network.models.Response
 import com.example.duoblogistics.internal.utils.SharedSettings
+import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
 import okhttp3.OkHttpClient
@@ -34,6 +37,9 @@ interface LogisticApiService {
 
     @GET("branches")
     fun getBranches(): Flowable<List<Branch>>
+
+    @POST("actions")
+    fun postAction(@Body action: ActionWithItemsList): Single<Response>
 
 /*    @GET("user")
     suspend fun getAuthorizedUser(): Response<AuthorizedUserResponse>

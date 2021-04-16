@@ -63,4 +63,6 @@ class LocalDataSourceImpl(
     }
 
     override fun getBranch(id:String):Single<Branch> = branchDao.getBranch(id)
+
+    override  fun getPendingAction(): Single<List<ActionWithStoredItems>> = actionDao.getPendingActionsWithStoredItems()
 }

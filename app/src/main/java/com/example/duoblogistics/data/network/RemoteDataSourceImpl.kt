@@ -1,11 +1,11 @@
 package com.example.duoblogistics.data.network
 
-import com.example.duoblogistics.data.db.entities.Branch
-import com.example.duoblogistics.data.db.entities.StoredItem
-import com.example.duoblogistics.data.db.entities.StoredItemWithInfo
-import com.example.duoblogistics.data.db.entities.Trip
+import com.example.duoblogistics.data.db.entities.*
+import com.example.duoblogistics.data.network.models.ActionWithItemsList
 import com.example.duoblogistics.data.network.models.AuthenticationResponse
 import com.example.duoblogistics.data.network.models.Credentials
+import com.example.duoblogistics.data.network.models.Response
+import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
 
@@ -21,4 +21,6 @@ class RemoteDataSourceImpl(
         apiService.getTripStoredItems(id)
 
     override fun fetchBranches(): Flowable<List<Branch>> = apiService.getBranches()
+
+    override fun postAction(action: ActionWithItemsList): Single<Response> = apiService.postAction(action)
 }

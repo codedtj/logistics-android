@@ -10,3 +10,7 @@ const val ACTION_CAR_TO_CAR = "carToCar"
 const val ACTION_BRANCH_TO_CAR = "branchToCar"
 
 const val ACTION_CAR_TO_BRANCH = "carToBranch"
+
+const val ACTION_STATUS_PENDING = "pending"
+
+const val ACTION_STATUS_COMPLETED = "completed"

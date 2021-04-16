@@ -13,7 +13,9 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.work.OneTimeWorkRequest
 import com.example.duoblogistics.R
+import com.example.duoblogistics.data.network.workers.SyncActionsWorker
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.closestKodein
@@ -53,6 +55,16 @@ class MainActivity : AppCompatActivity(), KodeinAware {
             .get(AppViewModel::class.java)
 
         appViewModel.getBranches()
+
+        appViewModel.getPendingActions()
+
+        handlePendingActions()
+    }
+
+    private fun handlePendingActions() {
+        appViewModel.pendingActions.observe(this, {
+            appViewModel.syncPendingAction()
+        })
     }
 
     private fun checkPermission() {
