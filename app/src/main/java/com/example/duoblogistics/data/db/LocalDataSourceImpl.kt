@@ -1,5 +1,6 @@
 package com.example.duoblogistics.data.db
 
+import android.util.Log
 import com.example.duoblogistics.data.db.daos.*
 import com.example.duoblogistics.data.db.entities.*
 import io.reactivex.*
@@ -13,8 +14,8 @@ class LocalDataSourceImpl(
 ) : LocalDataSource {
     override fun getTrips(): Flowable<List<Trip>> = tripDao.getTrips()
 
-    override fun getTrip(id:String): Single<Trip> {
-        return  tripDao.getTrip(id)
+    override fun getTrip(id: String): Single<Trip> {
+        return tripDao.getTrip(id)
     }
 
     override fun saveTrips(trips: List<Trip>): Single<List<Long>> {
@@ -41,6 +42,10 @@ class LocalDataSourceImpl(
 
     override fun saveAction(action: Action): Single<Long> = actionDao.insert(action)
 
+    override fun updateAction(action:Action): Completable {
+        return actionDao.update(action)
+    }
+
     override fun saveActionStoredItems(
         actionId: Long,
         storedItems: List<StoredItem>
@@ -62,7 +67,8 @@ class LocalDataSourceImpl(
         return branchDao.getBranches()
     }
 
-    override fun getBranch(id:String):Single<Branch> = branchDao.getBranch(id)
+    override fun getBranch(id: String): Single<Branch> = branchDao.getBranch(id)
 
-    override  fun getPendingAction(): Single<List<ActionWithStoredItems>> = actionDao.getPendingActionsWithStoredItems()
+    override fun getPendingAction(): Single<List<ActionWithStoredItems>> =
+        actionDao.getPendingActionsWithStoredItems()
 }

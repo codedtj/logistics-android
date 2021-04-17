@@ -22,5 +22,5 @@ class RemoteDataSourceImpl(
 
     override fun fetchBranches(): Flowable<List<Branch>> = apiService.getBranches()
 
-    override fun postAction(action: ActionWithItemsList): Single<Response> = apiService.postAction(action)
+    override fun postAction(action: ActionWithItemsList): Completable = apiService.postAction(action)
 }

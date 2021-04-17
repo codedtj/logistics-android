@@ -26,6 +26,8 @@ interface LocalDataSource {
 
     fun saveAction(action: Action): Single<Long>
 
+    fun updateAction(action:Action): Completable
+
     fun saveActionStoredItems(actionId: Long, storedItems: List<StoredItem>): Single<List<Long>>
 
     fun getActionWithStoredItems(id: Long): Single<ActionWithStoredItems>

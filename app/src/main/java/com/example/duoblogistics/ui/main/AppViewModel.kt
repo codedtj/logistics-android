@@ -13,6 +13,7 @@ import com.example.duoblogistics.data.network.models.ActionWithItemsList
 import com.example.duoblogistics.internal.base.BaseViewModel
 import com.example.duoblogistics.internal.data.ACTION_STATUS_COMPLETED
 import com.example.duoblogistics.internal.extensions.plusAssign
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
@@ -74,7 +75,7 @@ class AppViewModel(
         if (syncing.value == true)
             return
 
-        val actionWithStoredItems = pendingActions.value?.first()
+        val actionWithStoredItems = pendingActions.value?.firstOrNull()
 
         if (actionWithStoredItems != null) {
             syncing.postValue(true)
@@ -97,23 +98,36 @@ class AppViewModel(
             )
         )
             .doFinally {
+                Log.d("app-vm", "Finally")
                 syncing.postValue(false)
+                SystemClock.sleep(5000)
                 syncPendingAction()
             }
-            .map {
+            .andThen {
+                Log.d("app-vm", "Updating Status")
                 actionWithStoredItems.action.status = ACTION_STATUS_COMPLETED
-                localDataSource.saveAction(
+                localDataSource.updateAction(
                     actionWithStoredItems.action
+                ).subscribe(
+                    {
+                        Log.d("app-vm", "Action is synced")
+                        mPendingActions.value?.let{actions->
+                            mPendingActions.postValue(
+                                actions.filter {
+                                    it.action.id != actionWithStoredItems.action.id
+                                }
+                            )
+                        }
+                    },
+                    {
+                        Log.e("app-vm", "Failed to sync action $it")
+                        SystemClock.sleep(10000)
+                    }
                 )
             }
+            .subscribeOn(Schedulers.newThread())
             .subscribe(
-                {
-                    Log.d("app-vm", "Action is synced")
-                },
-                {
-                    Log.d("app-vm", "Failed to sync action $it")
-                    SystemClock.sleep(10000)
-                }
+
             )
     }
 }

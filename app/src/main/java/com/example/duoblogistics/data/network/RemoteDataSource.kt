@@ -20,7 +20,7 @@ interface RemoteDataSource {
 
     fun fetchBranches(): Flowable<List<Branch>>
 
-    fun postAction(action: ActionWithItemsList): Single<Response>
+    fun postAction(action: ActionWithItemsList): Completable
 
 
 //

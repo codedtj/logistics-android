@@ -39,7 +39,7 @@ interface LogisticApiService {
     fun getBranches(): Flowable<List<Branch>>
 
     @POST("actions")
-    fun postAction(@Body action: ActionWithItemsList): Single<Response>
+    fun postAction(@Body action: ActionWithItemsList): Completable
 
 /*    @GET("user")
     suspend fun getAuthorizedUser(): Response<AuthorizedUserResponse>
