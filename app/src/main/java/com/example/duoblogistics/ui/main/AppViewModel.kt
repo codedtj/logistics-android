@@ -56,6 +56,7 @@ class AppViewModel(
 
     fun getPendingActions() {
         compositeDisposable += localDataSource.getPendingAction()
+            .repeatWhen{completed -> completed.delay(5, TimeUnit.SECONDS)}
             .subscribeOn(Schedulers.computation())
             .subscribe(
                 {
