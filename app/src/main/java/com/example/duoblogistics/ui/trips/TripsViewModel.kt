@@ -81,8 +81,6 @@ class TripsViewModel(
 
     fun getTripStoredItems(tripId: String) {
         compositeDisposable += tripsRepository.getTripStoredItems(tripId)
-            .doOnCancel { Log.d("dispose-vmGetTSI", "I am disposed") }
-            .doOnComplete { Log.d("dispose-vmGetTSI", "I have completed") }
             .subscribeOn(Schedulers.io())
             .subscribe(
                 {

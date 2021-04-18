@@ -5,13 +5,13 @@ import androidx.room.*
 @Entity(
     tableName = "stored_items",
     foreignKeys = [
-        ForeignKey(
-            entity = Trip::class,
-            parentColumns = arrayOf("id"),
-            childColumns = arrayOf("trip_id"),
+//        ForeignKey(
+//            entity = Trip::class,
+//            parentColumns = arrayOf("id"),
+//            childColumns = arrayOf("trip_id"),
 //            onDelete = ForeignKey.CASCADE,
 //            onUpdate = ForeignKey.CASCADE
-        ),
+//        ),
 //        ForeignKey(
 //            entity = StoredItemInfo::class,
 //            parentColumns = arrayOf("id"),
