@@ -10,7 +10,7 @@ data class ActionWithEverything(
 
     var trip: Trip? = null,
 
-    var tripTo: Trip? = null,
+    var targetTripId: Trip? = null,
 
     var branch: Branch? = null
 )

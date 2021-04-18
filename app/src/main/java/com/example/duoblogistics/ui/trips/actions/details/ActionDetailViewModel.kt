@@ -71,8 +71,8 @@ class ActionDetailViewModel(
                 }
             )
 
-        if (action.tripToId != null)
-            compositeDisposable += localDataSource.getTrip(action.tripToId)
+        if (action.targetTripId != null)
+            compositeDisposable += localDataSource.getTrip(action.targetTripId)
                 .subscribeOn(Schedulers.computation())
                 .subscribe(
                     {

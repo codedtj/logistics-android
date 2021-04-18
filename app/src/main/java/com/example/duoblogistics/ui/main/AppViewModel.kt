@@ -91,7 +91,7 @@ class AppViewModel(
             ActionWithItemsList(
                 actionWithStoredItems.action.name,
                 actionWithStoredItems.action.tripId,
-                actionWithStoredItems.action.tripToId,
+                actionWithStoredItems.action.targetTripId,
                 actionWithStoredItems.action.branchToId,
                 actionWithStoredItems.storedItems.map {
                     it.id
@@ -128,7 +128,13 @@ class AppViewModel(
             }
             .subscribeOn(Schedulers.newThread())
             .subscribe(
+                {
 
+                },
+                {
+                    Log.e("app-vm", "Failed to sync action 1 $it")
+                    SystemClock.sleep(10000)
+                }
             )
     }
 }
