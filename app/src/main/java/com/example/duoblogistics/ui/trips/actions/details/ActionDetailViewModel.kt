@@ -48,8 +48,8 @@ class ActionDetailViewModel(
     }
 
     private fun loadRelations(action: Action) {
-        if (action.branchToId != null)
-            compositeDisposable += localDataSource.getBranch(action.branchToId)
+        if (action.branchId != null)
+            compositeDisposable += localDataSource.getBranch(action.branchId)
                 .subscribeOn(Schedulers.computation())
                 .subscribe(
                     {

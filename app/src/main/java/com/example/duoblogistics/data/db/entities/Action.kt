@@ -12,6 +12,6 @@ data class Action(
     val name: String,
     val tripId: String,
     val targetTripId: String? = null,
-    val branchToId: String? = null,
+    val branchId: String? = null,
     var status:String = "pending"
 )

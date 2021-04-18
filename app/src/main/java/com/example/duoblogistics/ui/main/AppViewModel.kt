@@ -4,16 +4,13 @@ import android.os.SystemClock
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.work.ListenableWorker
 import com.example.duoblogistics.data.db.LocalDataSource
 import com.example.duoblogistics.data.db.entities.ActionWithStoredItems
-import com.example.duoblogistics.data.db.entities.Branch
 import com.example.duoblogistics.data.network.RemoteDataSource
 import com.example.duoblogistics.data.network.models.ActionWithItemsList
 import com.example.duoblogistics.internal.base.BaseViewModel
 import com.example.duoblogistics.internal.data.ACTION_STATUS_COMPLETED
 import com.example.duoblogistics.internal.extensions.plusAssign
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
@@ -92,7 +89,7 @@ class AppViewModel(
                 actionWithStoredItems.action.name,
                 actionWithStoredItems.action.tripId,
                 actionWithStoredItems.action.targetTripId,
-                actionWithStoredItems.action.branchToId,
+                actionWithStoredItems.action.branchId,
                 actionWithStoredItems.storedItems.map {
                     it.id
                 }
